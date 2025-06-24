@@ -8,3 +8,7 @@
 .cardHighlight {
     min-height: 100%;
 }
+
+html, body {
+  overflow-x: hidden;
+}

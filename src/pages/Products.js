@@ -73,11 +73,19 @@ export default function Products() {
 
     return (
         <>
-            <h1 className="my-5 text-center">Our Products</h1>
+            
             {user.isAdmin ? (
-                <AdminView productsData={products} fetchData={fetchData} />
+                <>
+                    <h1 className="my-5 text-center">Admin Dashboard</h1>
+                    <AdminView productsData={products} fetchData={fetchData} />
+                </>
+
             ) : (
-                <UserView productsData={products} />
+                <>
+                    <h1 className="my-5 text-center">Our Products</h1>
+                    <UserView productsData={products} />
+                </>
+
             )}
         </>
     );

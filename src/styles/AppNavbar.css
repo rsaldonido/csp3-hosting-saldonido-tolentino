@@ -1,39 +1,156 @@
-/* Dropdown animation wrapper */
-.dropdown-animation-wrapper {
+/* === General Styles === */
+.navbar-light-navy {
+  background-color: #2c2c2c;
+  box-shadow: 0 11px 12px rgba(0, 0, 0, 0.6);
+  font-size: 1.4rem;
+}
+
+.navbar-light-navy .nav-link,
+.navbar-light-navy .navbar-brand {
+  color: #ffffff;
+}
+
+.navbar-light-navy .nav-link:hover,
+.navbar-light-navy .nav-link.active {
+  color: #ff4b4b;
+}
+
+/* === Mobile Icon Container === */
+.mobile-icons {
+  gap: 0.5rem;
+}
+
+/* === Account Dropdown (Mobile and Desktop) === */
+.dropdown-animation-wrapper,
+.account-wrapper {
   position: relative;
 }
 
-/* Animated dropdown menu */
-.animated-dropdown-menu {
+.animated-dropdown-menu,
+.mobile-dropdown-menu {
   position: absolute;
   top: 100%;
   right: 0;
   background-color: #2c2c2c;
-  margin-top: 1.2rem;
-  padding-bottom: .7rem;
+  margin-top: 0.8rem;
+  padding-bottom: 0.7rem;
   border: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   opacity: 0;
   transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
   z-index: 1000;
   min-width: 6rem;
   border-radius: 0.5rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.animated-dropdown-menu.show {
+.animated-dropdown-menu.show,
+.mobile-dropdown-menu.show {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
 
-/* Font size adjustment */
-.navbar {
-  font-size: 1.4rem;
+.dropdown-item {
+  color: #ffffff;
+  background-color: transparent;
+  padding: 0.5rem 1rem;
+  transition: color 0.2s ease;
+  display: block;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
 }
 
-/* Fade-in animation for all nav items */
+.dropdown-item:hover {
+  color: #ff4b4b;
+}
+
+/* === Hamburger Icon === */
+.hamburger-icon {
+  width: 24px;
+  height: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.hamburger-icon span {
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger-icon.open span:nth-child(1) {
+  transform: rotate(45deg) translate(4px, 4px);
+  background: #ff4b4b;
+}
+
+.hamburger-icon.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-icon.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(4px, -4px);
+  background: #ff4b4b;
+}
+
+/* === Hamburger Panel === */
+.hamburger-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #2c2c2c;
+  margin-top: 0.8rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  min-width: 9rem;
+  z-index: 1000;
+}
+
+.hamburger-menu.show {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* === Nav Link Underline Animation === */
+.nav-link {
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-link::after,
+.nav-icon-button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: #007bff;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-icon-button:hover::after,
+.nav-icon-button.active::after {
+  width: 85%;
+}
+
+/* === Fade-in on reload === */
 .navbar-brand,
 .nav-fade-on-reload {
   opacity: 0;
@@ -50,127 +167,66 @@
   animation: fadeIn 0.5s ease-in-out 0.3s forwards;
 }
 
-/* Fade-in animation keyframes */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-/* Base nav-link styles */
-.nav-link {
-  position: relative;
-  transition: color 0.3s ease, transform 0.2s ease;
-  display: inline-block;
-}
-
-/* Hover effects for all links including Account */
-.nav-link:hover {
-  color: #007bff;
-   /*bounce effect*/
-  /*transform: translateY(-2px);*/
-}
-
-.nav-link:active {
-  transform: translateY(0);
-}
-
-/* Underline animation */
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background-color: #007bff;
-  transition: width 0.3s ease, left 0.3s ease;
-  transform: translateX(-50%);
-}
-
-.nav-link:hover::after {
-  width: 85%;
-  left: 50%;
-}
-
-/* Special dropdown arrow styling */
-.dropdown-toggle::after {
-  display: inline-block;
-  margin-left: 0.255em;
-  vertical-align: 0.255em;
-  content: "";
-  border-top: 0.3em solid;
-  border-right: 0.3em solid transparent;
-  border-bottom: 0;
-  border-left: 0.3em solid transparent;
-  transition: transform 0.3s ease;
-  position: static;
-  width: auto;
-  height: auto;
-}
-
-.show .dropdown-toggle::after {
-  transform: rotate(-180deg);
-}
-
-/* Dropdown menu item animations */
-.animated-dropdown-menu .dropdown-item {
-  color: #ffffff; /* default text color (optional) */
-  background-color: transparent; /* ensure no background */
-  transition: color 0.2s ease, transform 0.2s ease;
-  padding: 0.5rem 1rem;
-}
-
-.animated-dropdown-menu .dropdown-item:hover {
-  color: #ff4b4b;
-  background-color: transparent;
-}
-
-.custom-account-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
-  background-color: #007bff;
-  transition: width 0.3s ease, left 0.3s ease;
-}
-
-.custom-account-link:hover::after {
-  width: 85%;
-}
-
-
-.navbar .nav-link.active {
-  color: #ff4b4b;; /* or any highlight color */
-}
-
-.navbar .nav-link.active::after {
-  width: 85%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-
-
-/* Background color for navbar */
-.navbar-light-navy {
-  background-color: #2c2c2c; /* light navy blue */
-  box-shadow: 0 11px 12px rgba(0, 0, 0, 0.6);
-}
-
-/* Light text on dark background */
-.navbar-light-navy .nav-link,
-.navbar-light-navy .navbar-brand,
-.navbar-light-navy .dropdown-toggle {
+/* === Utility Buttons === */
+.nav-icon-button {
+  background: none;
+  border: none;
   color: #ffffff;
+  font-size: 1.4rem; /* Match with .nav-link */
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0.2rem 0.75rem;
+  transition: color 0.2s ease;
+  position: relative;
+  line-height: 1.5;
 }
 
-/* Highlight on hover/active */
-.navbar-light-navy .nav-link:hover,
-.navbar-light-navy .nav-link.active,
-.navbar-light-navy .dropdown-item:hover {
-  color: #ff4b4b;
 
+.nav-icon-button:hover {
+  color: #ff4b4b;
+}
+
+
+/* Spin animation for hamburger wrapper */
+.hamburger-icon {
+  width: 24px;
+  height: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.5s ease; /* <-- added */
+}
+
+.hamburger-icon.open {
+  transform: rotate(180deg); /* or 360deg for full spin */
+}
+
+/* Existing line animations (already in your CSS) */
+.hamburger-icon span {
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger-icon.open span:nth-child(1) {
+  transform: rotate(45deg) translate(4px, 7px);
+  background: #ff4b4b;
+}
+
+.hamburger-icon.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-icon.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(4px, -6px);
+  background: #ff4b4b;
 }

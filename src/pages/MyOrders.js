@@ -40,26 +40,22 @@ export default function MyOrders() {
     };
 
     const cancelOrder = (orderId) => {
-        fetch(`http://localhost:4000/orders/${orderId}/cancel`, {
-            method: 'PATCH',
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to cancel order');
-            }
-            return response.json();
-        })
-        .then(data => {
-            notyf.success('Order cancelled successfully');
-            fetchOrders();
-        })
-        .catch(err => {
-            console.error("Cancel error:", err);
-            notyf.error(err.message);
-        });
+      fetch(`http://localhost:4000/orders/${orderId}/update-status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({})
+      })
+      .then(response => response.json())
+      .then(data => {
+        notyf.success(data.message || 'Order cancelled successfully');
+        fetchOrders();
+      })
+      .catch(err => {
+        notyf.error(err.error || err.message || 'Failed to cancel order');
+      });
     };
 
     useEffect(() => {

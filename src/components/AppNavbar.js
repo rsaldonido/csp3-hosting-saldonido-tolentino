@@ -39,7 +39,6 @@ export default function AppNavbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-
   return (
     <Navbar expand="lg" fixed="top" className="navbar-light-navy m-2 rounded-pill p-0">
 

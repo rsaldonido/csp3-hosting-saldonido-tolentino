@@ -18,8 +18,8 @@ const ResetPassword = () => {
 
       // 181. update the URL/fetch route and change method to PUT
       // For 182. got to pages/Profilejs
-      const response = await fetch('http://localhost:4000/users/change-password', {
-        method: 'PUT',
+      const response = await fetch('http://localhost:4000/users/update-password', {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`

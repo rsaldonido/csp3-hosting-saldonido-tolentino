@@ -3,10 +3,14 @@ import Container from 'react-bootstrap/Container';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faFacebookF, faYoutube, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faMapMarkerAlt, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 // components
 import AppNavbar from './components/AppNavbar';
 import Loading from './components/Loading';
+import Footer from './components/Footer';
 
 // pages
 import Error from './pages/Error';
@@ -21,7 +25,8 @@ import AddProduct from './pages/AddProduct';
 import Cart from './pages/Cart';
 import MyOrders from './pages/MyOrders';
 
-
+/* adds the selected icons to the Font Awesome icon library */
+library.add(faFacebookF, faYoutube, faInstagram, faMapMarkerAlt, faPhone, faEnvelope);
 
 function App() {
   const [user, setUser] = useState({
@@ -83,22 +88,27 @@ function App() {
   return (
     <UserProvider value={{ user, setUser, unsetUser }}>
       <Router>
-        <AppNavbar />
-        <Container fluid className="p-3">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="*" element={<Error />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:productId" element={<ProductView />} />
-            <Route path="/addProduct" element={<AddProduct />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/myOrders" element={<MyOrders />} />
-          </Routes>
-        </Container>
+        <div className="d-flex flex-column min-vh-100">
+          <AppNavbar />
+            <main className="flex-grow-1">
+              <Container fluid className="p-3">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="*" element={<Error />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/logout" element={<Logout />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="/products/:productId" element={<ProductView />} />
+                  <Route path="/addProduct" element={<AddProduct />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/myOrders" element={<MyOrders />} />
+                </Routes>
+              </Container>
+            </main>
+          <Footer />
+        </div>    
       </Router>
     </UserProvider>
   )

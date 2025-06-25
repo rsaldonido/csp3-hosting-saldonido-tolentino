@@ -10,7 +10,6 @@
     position: relative;
 }
 
-
 .banner-container::before {
     content: '';
     position: absolute;

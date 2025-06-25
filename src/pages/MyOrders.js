@@ -12,6 +12,23 @@ export default function MyOrders() {
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [products, setProducts] = useState({});
+
+    // Function to fetch product details
+    const fetchProductDetails = (productId) => {
+        return fetch(`http://localhost:4000/products/${productId}`)
+            .then(res => {
+                if (!res.ok) throw new Error('Failed to fetch product');
+                return res.json();
+            })
+            .then(product => {
+                return { productId, product };
+            })
+            .catch(err => {
+                console.error('Fetch product error:', err);
+                return { productId, product: { name: 'Product not found' } };
+            });
+    };
 
     const fetchOrders = () => {
         setIsLoading(true);
@@ -29,43 +46,74 @@ export default function MyOrders() {
             return response.json();
         })
         .then(data => {
-            setOrders(data.orders || []);
-            setIsLoading(false);
+            const orders = data.orders || [];
+            setOrders(orders);
+
+            // Create an array of all product IDs from all orders
+            const allProductIds = orders.flatMap(order => 
+                order.productsOrdered.map(item => item.productId)
+            );
+
+            // Remove duplicates
+            const uniqueProductIds = [...new Set(allProductIds)];
+
+            // Fetch details for all unique products
+            const productFetches = uniqueProductIds.map(productId => 
+                fetchProductDetails(productId)
+            );
+
+            return Promise.all(productFetches);
+        })
+        .then(productResults => {
+            // Create a products object with productId as key
+            const productsMap = {};
+            productResults.forEach(({ productId, product }) => {
+                productsMap[productId] = product;
+            });
+            setProducts(productsMap);
         })
         .catch(err => {
             console.error("Fetch orders error:", err);
             setError(err.message);
+        })
+        .finally(() => {
             setIsLoading(false);
         });
     };
 
     const cancelOrder = (orderId) => {
-      fetch(`http://localhost:4000/orders/${orderId}/update-status`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({})
-      })
-      .then(response => response.json())
-      .then(data => {
-        notyf.success(data.message || 'Order cancelled successfully');
-        fetchOrders();
-      })
-      .catch(err => {
-        notyf.error(err.error || err.message || 'Failed to cancel order');
-      });
+        fetch(`http://localhost:4000/orders/${orderId}/update-status`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+            notyf.success(data.message || 'Order cancelled successfully');
+            fetchOrders();
+        })
+        .catch(err => {
+            notyf.error(err.error || err.message || 'Failed to cancel order');
+        });
     };
 
     useEffect(() => {
+        if (user.isAdmin) {
+            navigate('/products');
+            return;
+        }
+
         if (user.id) {
             fetchOrders();
         } else {
             setIsLoading(false);
         }
-    }, [user.id]);
+    }, [user.id, user.isAdmin, navigate]);
 
+    
     if (isLoading) {
         return (
             <Container className="mt-5 text-center">
@@ -123,15 +171,17 @@ export default function MyOrders() {
         );
     }
 
+
     return (
         <Container className="mt-5">
             <h2 className="mb-4">My Orders</h2>
             <Table striped bordered hover responsive>
                 <thead>
-                    <tr>
+                    <tr className="text-center">
                         <th>Order #</th>
                         <th>Date</th>
                         <th>Items</th>
+                        <th>Quantity</th>
                         <th>Total</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -139,20 +189,29 @@ export default function MyOrders() {
                 </thead>
                 <tbody>
                     {orders.map(order => (
-                        <tr key={order._id}>
+                        <tr key={order._id} className="align-middle">
                             <td>{order._id.slice(-6).toUpperCase()}</td>
                             <td>{new Date(order.orderedOn).toLocaleDateString()}</td>
                             <td>
                                 <ul className="mb-0">
                                     {order.productsOrdered.map(item => (
                                         <li key={item.productId}>
-                                            {item.productId} (Qty: {item.quantity})
+                                            {products[item.productId]?.name || 'Loading...'}
                                         </li>
                                     ))}
                                 </ul>
                             </td>
-                            <td>PhP {order.totalPrice.toFixed(2)}</td>
                             <td>
+                                <ul className="mb-0 list-unstyled text-center">
+                                    {order.productsOrdered.map(item => (
+                                        <li key={item.productId}>
+                                            {item.quantity}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </td>
+                            <td>&#8369; {order.totalPrice.toFixed(2)}</td>
+                            <td className="text-center">
                                 <Badge bg={
                                     order.status === 'Pending' ? 'warning' :
                                     order.status === 'Shipped Out' ? 'info' :
@@ -161,7 +220,7 @@ export default function MyOrders() {
                                     {order.status}
                                 </Badge>
                             </td>
-                            <td>
+                            <td className="text-center">
                                 {order.status === 'Pending' && (
                                     <Button 
                                         variant="danger" 

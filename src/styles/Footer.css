@@ -1,0 +1,41 @@
+/* Footer.css */
+.footer {
+  background: linear-gradient(135deg, #000000 0%, #434343 100%);
+  color: white;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+}
+
+.social-link {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  color: white;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-link:last-child {
+  margin-right: 0;
+}
+
+.social-link:hover {
+  background: white;
+  color: #434343;
+  transform: translateY(-3px);
+}
+
+.copyright-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+}
+
+/* No responsive override needed - both aligned to start */

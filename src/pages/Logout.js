@@ -5,8 +5,6 @@ import UserContext from '../context/UserContext';
 
 export default function Logout() {
 
-    console.log("test");
-
     const { setUser, unsetUser } = useContext(UserContext);
 
 

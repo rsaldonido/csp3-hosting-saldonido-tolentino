@@ -41,7 +41,8 @@ export default function AppNavbar() {
 
 
   return (
-    <Navbar expand="lg" sticky="top" className="navbar-light-navy m-2 rounded-pill p-0">
+    <Navbar expand="lg" fixed="top" className="navbar-light-navy m-2 rounded-pill p-0">
+
       <Container fluid className="position-relative">
         <Navbar.Brand as={Link} to="/" className="me-auto">
           <img src={logo} alt="Red Ram Logo" className="navbar-logo" />

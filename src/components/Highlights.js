@@ -1,4 +1,5 @@
 import { Row, Col, Card } from 'react-bootstrap';
+import '../styles/Highlights.css';
 
 export default function Highlights() {
 	return (

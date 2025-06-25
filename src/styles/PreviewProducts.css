@@ -1,0 +1,178 @@
+/* PreviewProducts.css */
+.highlight-cards {
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #202D36 0%, #1a242e 100%);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 1px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 30px;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.highlight-cards::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(80, 120, 150, 0.4), /* #507896 with opacity */
+    transparent
+  );
+  transition: left 0.6s;
+}
+
+.highlight-cards:hover::before {
+  left: 100%;
+}
+
+.highlight-cards:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.highlight-cards .card-body {
+  padding: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.highlight-cards .card-title {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.highlight-cards .card-title a {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #769889; /* Green from palette */
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.highlight-cards:hover .card-title a {
+  color: #800C1F; /* Dark red from palette */
+  transform: scale(1.05);
+}
+
+.highlight-cards .card-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #507896 0%, #769889 100%);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.highlight-cards:hover .card-title::after {
+  width: 60px;
+}
+
+.highlight-cards .card-text {
+  color: #929CAA; /* Light gray from palette */
+  line-height: 1.7;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+  margin: 0;
+}
+
+.highlight-cards:hover .card-text {
+  color: #d1d6dc;
+}
+
+.highlight-cards .card-footer {
+  background: rgba(32, 45, 54, 0.8); /* #202D36 with opacity */
+  border-top: 1px solid #507896; /* Medium blue from palette */
+  padding: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.price-tag {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #769889; /* Green from palette */
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.highlight-cards:hover .price-tag {
+  transform: scale(1.05);
+  color: #800C1F; /* Dark red from palette */
+}
+
+.btn-details {
+  background: linear-gradient(135deg, #800C1F 0%, #300007 100%);
+  border: none;
+  border-radius: 50px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(128, 12, 31, 0.3);
+}
+
+.btn-details:hover {
+  background: linear-gradient(135deg, #300007 0%, #800C1F 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(128, 12, 31, 0.4);
+}
+
+/* Staggered animation for cards */
+.highlight-cards:nth-child(1) {
+  animation: slideInUp 0.6s ease-out 0.1s both;
+}
+
+.highlight-cards:nth-child(2) {
+  animation: slideInUp 0.6s ease-out 0.2s both;
+}
+
+.highlight-cards:nth-child(3) {
+  animation: slideInUp 0.6s ease-out 0.3s both;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .highlight-cards {
+    margin-bottom: 20px;
+    min-height: 300px;
+  }
+  
+  .highlight-cards .card-title a {
+    font-size: 1.3rem;
+  }
+  
+  .highlight-cards:hover {
+    transform: translateY(-5px) scale(1.01);
+  }
+  
+  .price-tag {
+    font-size: 1.2rem;
+  }
+}

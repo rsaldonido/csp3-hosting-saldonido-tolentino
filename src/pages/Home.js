@@ -1,5 +1,6 @@
 import Banner from '../components/Banner';
 import Highlights from '../components/Highlights';
+import FeaturedProducts from '../components/FeaturedProducts';
 import backgroundImage from '../assets/backgrounds/background2.png'; // Import the image
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
     return (
         <>
             <Banner data={data}/>
+            <FeaturedProducts />
             <Highlights />
         </>
     )

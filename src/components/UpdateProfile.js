@@ -22,7 +22,7 @@ export default function UpdateProfile({ userDetails, fetchUserDetails }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        fetch('http://localhost:4000/users/update-profile', {
+        fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/users/update-profile', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

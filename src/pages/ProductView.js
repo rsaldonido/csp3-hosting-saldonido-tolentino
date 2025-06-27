@@ -27,7 +27,7 @@ export default function ProductView() {
   const addToCart = (productId) => {
     setIsAddingToCart(true);
     
-    fetch("http://localhost:4000/cart/add-to-cart", {
+    fetch("https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/cart/add-to-cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export default function ProductView() {
     setIsLoading(true);
     setError(null);
     
-    fetch(`http://localhost:4000/products/${productId}`)
+    fetch(`https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/products/${productId}`)
     .then(res => res.json())
     .then(data => {
       if (data._id) {

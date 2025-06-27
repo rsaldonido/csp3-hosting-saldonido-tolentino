@@ -17,7 +17,7 @@ export default function CartView() {
     const [tempQuantities, setTempQuantities] = useState({});
 
     const fetchProductDetails = (productId) => {
-        return fetch(`http://localhost:4000/products/${productId}`)
+        return fetch(`https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/products/${productId}`)
             .then(res => {
                 if (!res.ok) throw new Error('Failed to fetch product');
                 return res.json();
@@ -30,7 +30,7 @@ export default function CartView() {
 
     const fetchCart = () => {
         setIsLoading(true);
-        fetch('http://localhost:4000/cart/get-cart', {
+        fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/cart/get-cart', {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -83,7 +83,7 @@ export default function CartView() {
             return;
         }
 
-        fetch('http://localhost:4000/cart/update-cart-quantity', {
+        fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/cart/update-cart-quantity', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ export default function CartView() {
     };
 
     const removeItem = (productId) => {
-        fetch(`http://localhost:4000/cart/${productId}/remove-from-cart`, {
+        fetch(`https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/cart/${productId}/remove-from-cart`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -147,7 +147,7 @@ export default function CartView() {
     };
 
     const clearCart = () => {
-        fetch('http://localhost:4000/cart/clear-cart', {
+        fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/cart/clear-cart', {
             method: 'PUT',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -165,7 +165,7 @@ export default function CartView() {
     };
 
     const checkout = () => {
-        fetch('http://localhost:4000/orders/checkout', {
+        fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/orders/checkout', {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`

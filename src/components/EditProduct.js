@@ -44,7 +44,7 @@ export default function EditProduct({ product, fetchData }) {
     e.preventDefault();
     setIsLoading(true);
 
-    fetch(`http://localhost:4000/products/${product._id}/update`, {
+    fetch(`https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/products/${product._id}/update`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

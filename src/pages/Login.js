@@ -20,7 +20,7 @@ export default function Login() {
     function authenticate(authenticateParameter) {
 
         authenticateParameter.preventDefault();
-        fetch('http://localhost:4000/users/login', {
+        fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/users/login', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -37,7 +37,7 @@ export default function Login() {
 
             if(data.access !== undefined){
 
-                console.log(data.access);
+                // console.log(data.access);
 
                 localStorage.setItem('token', data.access);
                 retrieveUserDetails(data.access);
@@ -63,7 +63,7 @@ export default function Login() {
 
     function retrieveUserDetails(token){
             
-        fetch('http://localhost:4000/users/details', {
+        fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/users/details', {
             headers: {
                 Authorization: `Bearer ${ token }`
             }
@@ -71,7 +71,7 @@ export default function Login() {
         .then(res => res.json())
         .then(data => {
 
-            console.log(data);
+            // console.log(data);
                 setUser({
                 id: data._id,
                 isAdmin: data.isAdmin

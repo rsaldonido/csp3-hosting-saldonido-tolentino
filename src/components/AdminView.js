@@ -17,7 +17,7 @@ const AdminOrders = () => {
     const fetchOrders = () => {
         setIsLoading(true);
 
-        fetch('http://localhost:4000/orders/all-orders', {
+        fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/orders/all-orders', {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -31,10 +31,10 @@ const AdminOrders = () => {
             const productIds = [...new Set(allOrders.flatMap(order => order.productsOrdered.map(p => p.productId)))];
 
             Promise.all([
-                fetch('http://localhost:4000/users/all', {
+                fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/users/all', {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 }),
-                fetch('http://localhost:4000/products/all', {
+                fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/products/all', {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 })
             ])
@@ -56,7 +56,7 @@ const AdminOrders = () => {
     };
 
     const updateStatus = (orderId, newStatus) => {
-        fetch(`http://localhost:4000/orders/${orderId}/update-status`, {
+        fetch(`https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/orders/${orderId}/update-status`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

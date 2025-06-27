@@ -16,8 +16,8 @@ export default function Products() {
         setError(null);
 
         const fetchUrl = user.isAdmin 
-            ? "http://localhost:4000/products/all" 
-            : "http://localhost:4000/products/active";
+            ? "https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/products/all" 
+            : "https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/products/active";
 
         fetch(fetchUrl, {
             headers: {

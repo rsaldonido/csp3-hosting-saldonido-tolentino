@@ -10,7 +10,7 @@ export default function FeaturedProducts() {
     useEffect(() => {
         let isMounted = true; 
 
-        fetch("http://localhost:4000/products/active")
+        fetch("https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/products/active")
             .then(res => res.json())
             .then(data => {
                 if (!isMounted) return;

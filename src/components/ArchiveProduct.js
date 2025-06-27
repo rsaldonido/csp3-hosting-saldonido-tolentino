@@ -9,7 +9,7 @@ export default function ArchiveProduct({product, isActive, fetchData}) {
     const [productId, setproductId] = useState(product._id);
 
     const archiveToggle = () => {
-        fetch(`http://localhost:4000/products/${productId}/archive`, {
+        fetch(`https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/products/${productId}/archive`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export default function ArchiveProduct({product, isActive, fetchData}) {
 
 
         const activateToggle = () => {
-        fetch(`http://localhost:4000/products/${productId}/activate`, {
+        fetch(`https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/products/${productId}/activate`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

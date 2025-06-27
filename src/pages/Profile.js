@@ -16,7 +16,7 @@ export default function Profile() {
 	const fetchUserDetails = () => {
 	    setLoading(true);
 
-	    fetch(`http://localhost:4000/users/details`, {
+	    fetch(`https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/users/details`, {
 	        headers: {
 	            Authorization: `Bearer ${localStorage.getItem('token')}`
 	        }

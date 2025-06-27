@@ -21,7 +21,7 @@ const ResetPassword = () => {
     try {
       const token = localStorage.getItem('token'); // assuming JWT is stored in localStorage
 
-      const response = await fetch('http://localhost:4000/users/update-password', {
+      const response = await fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/users/update-password', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

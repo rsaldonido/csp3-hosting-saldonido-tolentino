@@ -19,6 +19,19 @@ export default function AddProduct() {
   function handleImageChange(e) {
     const file = e.target.files[0];
     if (file) {
+      const maxSize = 50 * 1024; // 50KB
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+      if (!validTypes.includes(file.type)) {
+        notyf.error("Only JPG, JPEG, and PNG formats are allowed.");
+        return;
+      }
+
+      if (file.size > maxSize) {
+        notyf.error("Image must be less than 50KB.");
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (event) => {
         setImage(event.target.result);
@@ -26,6 +39,7 @@ export default function AddProduct() {
       reader.readAsDataURL(file);
     }
   }
+
 
   function createProduct(e) {
     e.preventDefault();
@@ -58,7 +72,7 @@ export default function AddProduct() {
       }
     })
     .catch(error => {
-      console.error('Fetch error:', error);
+      // console.error('Fetch error:', error);
       notyf.error("Failed to Meet Image Requirements");
     })
     .finally(() => {

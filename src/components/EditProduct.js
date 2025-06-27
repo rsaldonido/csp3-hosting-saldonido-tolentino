@@ -19,6 +19,19 @@ export default function EditProduct({ product, fetchData }) {
   function handleImageChange(e) {
     const file = e.target.files[0];
     if (file) {
+      const maxSize = 50 * 1024; // 50KB
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+      if (!validTypes.includes(file.type)) {
+        notyf.error("Only JPG, JPEG, and PNG formats are allowed.");
+        return;
+      }
+
+      if (file.size > maxSize) {
+        notyf.error("Image must be less than 50KB.");
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (event) => {
         setImage(event.target.result);
@@ -55,7 +68,7 @@ export default function EditProduct({ product, fetchData }) {
       }
     })
     .catch(err => {
-      console.error("Update error:", err);
+      // console.error("Update error:", err);
       notyf.error("Error updating product");
     })
     .finally(() => {

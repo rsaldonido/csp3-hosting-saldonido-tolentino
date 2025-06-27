@@ -20,6 +20,8 @@ export default function AppNavbar() {
     setHamburgerOpen(false);
   }, [location]);
 
+  
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       const clickedOutsideMobileAccount =
@@ -38,6 +40,7 @@ export default function AppNavbar() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
 
   return (
     <Navbar expand="lg" fixed="top" className="navbar-light-navy m-2 rounded-pill p-0">

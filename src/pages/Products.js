@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Spinner, Alert } from 'react-bootstrap';
 import UserContext from '../context/UserContext';
 import UserView from '../components/UserView';
 import AdminView from '../components/AdminView';
+import '../styles/Products.css';
 
 export default function Products() {
     const { user } = useContext(UserContext);
@@ -10,34 +11,40 @@ export default function Products() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const fetchData = async () => {
-        try {
-            setIsLoading(true);
-            setError(null);
-            
-            const fetchUrl = user.isAdmin 
-                ? "http://localhost:4000/products/all" 
-                : "http://localhost:4000/products/active";
+    const fetchData = () => {
+        setIsLoading(true);
+        setError(null);
 
-            const response = await fetch(fetchUrl, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            });
+        const fetchUrl = user.isAdmin 
+            ? "http://localhost:4000/products/all" 
+            : "http://localhost:4000/products/active";
 
-            if (!response.ok) throw new Error('Network response was not ok');
-            
-            const data = await response.json();
-            
-            if (!Array.isArray(data)) throw new Error('Invalid data format received');
-            
-            setProducts(data);
-        } catch (err) {
+        fetch(fetchUrl, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return res.json();
+        })
+        .then(data => {
+            if (!Array.isArray(data)) {
+                setError('Invalid data format received');
+                setProducts([]);
+            } else {
+                setProducts(data);
+                setError(null);
+            }
+            setIsLoading(false);
+        })
+        .catch(err => {
             console.error("Fetch error:", err);
             setError(err.message);
-        } finally {
             setIsLoading(false);
-        }
+        });
     };
 
     useEffect(() => {
@@ -46,47 +53,52 @@ export default function Products() {
 
     if (isLoading) {
         return (
-            <Container className="mt-5 text-center">
-                <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </Spinner>
-            </Container>
+            <div className="loading-container">
+                <Container className="text-center">
+                    <Spinner animation="border" role="status" className="loading-spinner">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </Container>
+            </div>
         );
     }
 
     if (error) {
         return (
-            <Container className="mt-5">
-                <Alert variant="danger">
-                    {error}
-                    <Button 
-                        variant="primary" 
-                        onClick={fetchData}
-                        className="ms-3"
-                    >
-                        Retry
-                    </Button>
-                </Alert>
-            </Container>
+            <div className="error-container">
+                <Container>
+                    <Alert variant="danger" className="error-alert">
+                        {error}
+                        <Button 
+                            variant="primary" 
+                            onClick={fetchData}
+                            className="retry-btn"
+                        >
+                            Retry
+                        </Button>
+                    </Alert>
+                </Container>
+            </div>
         );
     }
 
     return (
-        <>
-            
+        <div className="products-container">
             {user.isAdmin ? (
                 <>
-                    <h1 className="my-5 text-center">Admin Dashboard</h1>
-                    <AdminView productsData={products} fetchData={fetchData} />
+                    <h1 className="products-title admin-title">Admin Dashboard</h1>
+                    <Container>
+                        <AdminView productsData={products} fetchData={fetchData} />
+                    </Container>
                 </>
-
             ) : (
                 <>
-                    <h1 className="my-5 text-center">Our Products</h1>
-                    <UserView productsData={products} />
+                    <h1 className="products-title">Our Products</h1>
+                    <Container>
+                        <UserView productsData={products} />
+                    </Container>
                 </>
-
             )}
-        </>
+        </div>
     );
 }

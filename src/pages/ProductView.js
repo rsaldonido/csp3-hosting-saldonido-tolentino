@@ -4,6 +4,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
+import '../styles/ProductView.css';
 
 export default function ProductView() {
   const notyf = new Notyf();
@@ -16,6 +17,12 @@ export default function ProductView() {
   const [error, setError] = useState(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    if (user.isAdmin) {
+      navigate('/products');
+    }
+  }, [user.isAdmin, navigate]);
 
   const addToCart = (productId) => {
     setIsAddingToCart(true);
@@ -53,6 +60,8 @@ export default function ProductView() {
   };
 
   useEffect(() => {
+    if (user.isAdmin) return;
+    
     setIsLoading(true);
     setError(null);
     
@@ -72,146 +81,170 @@ export default function ProductView() {
     .finally(() => {
       setIsLoading(false);
     });
-  }, [productId]);
+  }, [productId, user.isAdmin]);
+
+  if (user.isAdmin) {
+    return (
+      <div className="product-view-container">
+        <Container className="mt-5 text-center">
+          <Spinner animation="border" role="status" className="loading-spinner">
+            <span className="visually-hidden">Redirecting...</span>
+          </Spinner>
+        </Container>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
-      <Container className="mt-5 text-center">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </Container>
+      <div className="product-view-container">
+        <Container className="mt-5 text-center">
+          <Spinner animation="border" role="status" className="loading-spinner">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </Container>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <Container className="mt-5">
-        <Alert variant="danger">
-          {error}
-          <div className="mt-3">
-            <Button variant="primary" onClick={() => navigate('/products')}>
-              Back to Products
-            </Button>
-          </div>
-        </Alert>
-      </Container>
+      <div className="product-view-container">
+        <Container className="mt-5">
+          <Alert variant="danger" className="error-alert">
+            {error}
+            <div className="mt-3">
+              <Button variant="primary" onClick={() => navigate('/products')} className="back-button">
+                Back to Products
+              </Button>
+            </div>
+          </Alert>
+        </Container>
+      </div>
     );
   }
 
   if (!product) {
     return (
-      <Container className="mt-5">
-        <Alert variant="warning">
-          Product not found
-          <div className="mt-3">
-            <Button variant="primary" onClick={() => navigate('/products')}>
-              Back to Products
-            </Button>
-          </div>
-        </Alert>
-      </Container>
+      <div className="product-view-container">
+        <Container className="mt-5">
+          <Alert variant="warning" className="warning-alert">
+            Product not found
+            <div className="mt-3">
+              <Button variant="primary" onClick={() => navigate('/products')} className="back-button">
+                Back to Products
+              </Button>
+            </div>
+          </Alert>
+        </Container>
+      </div>
     );
   }
   
   return (
-    <Container className="mt-5">
-      <Row className="justify-content-center">
-        <Col lg={8} xl={6}>
-          <Card className="shadow-sm">
-            <Card.Body>
-              <div className="mb-4">
-                <Button 
-                  variant="outline-secondary" 
-                  onClick={() => navigate('/products')}
-                  className="mb-3"
-                >
-                  ← Back to Products
-                </Button>
-              </div>
-              
-              {product.image && (
-                <div className="text-center mb-4">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    style={{ maxWidth: '100%', maxHeight: '300px' }}
-                  />
+    <div className="product-view-container">
+      <Container className="mt-5">
+        <Row className="justify-content-center">
+          <Col lg={8} xl={6}>
+            <Card className="product-detail-card">
+              <Card.Body>
+                <div className="mb-4">
+                  <Button 
+                    variant="outline-secondary" 
+                    onClick={() => navigate('/products')}
+                    className="back-button mb-3"
+                  >
+                    ← Back to Products
+                  </Button>
                 </div>
-              )}
-              
-              <Card.Title className="text-center mb-4">{product.name}</Card.Title>
-              
-              <Card.Subtitle>Description:</Card.Subtitle>
-              <Card.Text className="mb-4">{product.description}</Card.Text>
-              
-              <Card.Subtitle>Price:</Card.Subtitle>
-              <Card.Text className="mb-4">&#8369; {product.price.toFixed(2)}</Card.Text>
-              
-              <Card.Subtitle>Status:</Card.Subtitle>
-              <Card.Text className="mb-4">
-                {product.isActive ? (
-                  <span className="text-success">Available</span>
-                ) : (
-                  <span className="text-danger">Not Available</span>
+                
+                {product.image && (
+                  <div className="product-image-container text-center mb-4">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="product-image"
+                    />
+                  </div>
                 )}
-              </Card.Text>
+                
+                <Card.Title className="product-title">{product.name}</Card.Title>
+                
+                <Card.Subtitle className="product-subtitle">Description:</Card.Subtitle>
+                <Card.Text className="product-text mb-4">{product.description}</Card.Text>
+                
+                <Card.Subtitle className="product-subtitle">Price:</Card.Subtitle>
+                <Card.Text className="product-price mb-4">&#8369; {product.price.toFixed(2)}</Card.Text>
+                
+                <Card.Subtitle className="product-subtitle">Status:</Card.Subtitle>
+                <Card.Text className="product-text mb-4">
+                  {product.isActive ? (
+                    <span className="status-available">Available</span>
+                  ) : (
+                    <span className="status-unavailable">Not Available</span>
+                  )}
+                </Card.Text>
 
-              <Card.Subtitle>Quantity:</Card.Subtitle>
-              <div className="d-flex align-items-center mb-4">
-                <Button 
-                  variant="outline-secondary" 
-                  onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
-                  disabled={quantity <= 1}
-                >
-                  -
-                </Button>
-                <Form.Control
-                  type="number"
-                  min="1"
-                  value={quantity}
-                  onChange={e => setQuantity(Math.max(1, Number(e.target.value)))}
-                  className="mx-2 text-center"
-                  style={{ width: '60px' }}
-                />
-                <Button 
-                  variant="outline-secondary" 
-                  onClick={() => setQuantity(prev => prev + 1)}
-                >
-                  +
-                </Button>
-              </div>
-              
-              <div className="d-grid gap-2">
-                {user.id !== null ? (
+                <Card.Subtitle className="product-subtitle">Quantity:</Card.Subtitle>
+                <div className="quantity-controls d-flex align-items-center mb-4">
                   <Button 
-                    variant="primary" 
-                    size="lg"
-                    onClick={() => addToCart(productId)}
-                    disabled={isAddingToCart || !product.isActive}
+                    variant="outline-secondary" 
+                    onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
+                    disabled={quantity <= 1}
+                    className="quantity-btn"
                   >
-                    {isAddingToCart ? (
-                      <>
-                        <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-                        {' Adding...'}
-                      </>
-                    ) : product.isActive ? 'Add to Cart' : 'Product Not Available'}
+                    -
                   </Button>
-                ) : (
+                  <Form.Control
+                    type="number"
+                    min="1"
+                    value={quantity}
+                    onChange={e => setQuantity(Math.max(1, Number(e.target.value)))}
+                    className="quantity-input mx-2 text-center"
+                    style={{ width: '75px' }}
+                  />
                   <Button 
-                    as={Link} 
-                    to="/login" 
-                    variant="danger" 
-                    size="lg"
+                    variant="outline-secondary" 
+                    onClick={() => setQuantity(prev => prev + 1)}
+                    className="quantity-btn"
                   >
-                    Log in to Purchase
+                    +
                   </Button>
-                )}
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+                </div>
+                
+                <div className="d-grid gap-2">
+                  {user.id !== null ? (
+                    <Button 
+                      variant="primary" 
+                      size="lg"
+                      onClick={() => addToCart(productId)}
+                      disabled={isAddingToCart || !product.isActive}
+                      className="add-to-cart-btn"
+                    >
+                      {isAddingToCart ? (
+                        <>
+                          <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                          {' Adding...'}
+                        </>
+                      ) : product.isActive ? 'Add to Cart' : 'Product Not Available'}
+                    </Button>
+                  ) : (
+                    <Button 
+                      as={Link} 
+                      to="/login" 
+                      variant="danger" 
+                      size="lg"
+                      className="login-btn"
+                    >
+                      Log in to Purchase
+                    </Button>
+                  )}
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }

@@ -5,10 +5,18 @@
     box-sizing: border-box;
 }
 
-.cardHighlight {
-    min-height: 100%;
+html, body {
+    overflow-x: hidden;
+    min-height: 100vh;
+    background: 
+        /* Circuit board pattern */
+        linear-gradient(90deg, transparent 24%, rgba(0, 255, 255, 0.03) 25%, rgba(0, 255, 255, 0.03) 26%, transparent 27%, transparent 74%, rgba(0, 255, 255, 0.03) 75%, rgba(0, 255, 255, 0.03) 76%, transparent 77%, transparent),
+        linear-gradient(rgba(255, 255, 255, 0.02) 50%, transparent 50%),
+        /* Tech gradient: deep black to dark blue/purple */
+        linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f172a 75%, #111827 100%);
+    background-size: 60px 60px, 60px 60px, 100% 100%;
 }
 
-html, body {
-  overflow-x: hidden;
+.main-content {
+    padding-top: 5vh;
 }

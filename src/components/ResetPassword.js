@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import '../styles/ResetPassword.css';
+
+// Import Font Awesome components
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock } from '@fortawesome/free-solid-svg-icons'; // Import specific icons
 
 const ResetPassword = () => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -16,8 +21,6 @@ const ResetPassword = () => {
     try {
       const token = localStorage.getItem('token'); // assuming JWT is stored in localStorage
 
-      // 181. update the URL/fetch route and change method to PUT
-      // For 182. got to pages/Profilejs
       const response = await fetch('http://localhost:4000/users/update-password', {
         method: 'PATCH',
         headers: {
@@ -27,13 +30,13 @@ const ResetPassword = () => {
         body: JSON.stringify({
           currentPassword,
           newPassword
-        })
+        } )
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setMessage('Password has been successfully reset.');
+        setMessage('Password has been successfully changed.');
         setCurrentPassword('');
         setNewPassword('');
       } else {
@@ -47,41 +50,51 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: '500px' }}>
-      <h3 className="mb-4">Reset Password</h3>
+    <div className="reset-password-container">
+      <div className="row justify-content-center">
+        <div className="col-lg-10 col-md-12">
+          <form onSubmit={handleResetPassword} className="reset-password-form">
+            <h3 className="reset-password-title">Update Password</h3>
 
-      <form onSubmit={handleResetPassword}>
-        <div className="mb-3">
-          <label htmlFor="currentPassword" className="form-label">Current Password</label>
-          <input
-            type="password"
-            className="form-control"
-            id="currentPassword"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            required
-          />
+            <div className="form-group-tech-reset">
+              <label htmlFor="currentPassword" className="form-label-tech-reset mb-3">
+                <FontAwesomeIcon icon={faLock} className="me-2" />
+                Current Password
+              </label>
+              <input
+                type="password"
+                className="form-control-tech-reset"
+                id="currentPassword"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="form-group-tech-reset mb-3">
+              <label htmlFor="newPassword" className="form-label-tech-reset">
+                <FontAwesomeIcon icon={faLock} className="me-2" /> 
+                New Password
+              </label>
+              <input
+                type="password"
+                className="form-control-tech-reset"
+                id="newPassword"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            {message && <div className="alert-success-tech">{message}</div>}
+            {error && <div className="alert-danger-tech">{error}</div>}
+
+            <button type="submit" className="submit-btn-tech-reset" disabled={loading}>
+              {loading ? 'Resetting...' : 'Reset Password'}
+            </button>
+          </form>
         </div>
-
-        <div className="mb-3">
-          <label htmlFor="newPassword" className="form-label">New Password</label>
-          <input
-            type="password"
-            className="form-control"
-            id="newPassword"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        {message && <div className="alert alert-success">{message}</div>}
-        {error && <div className="alert alert-danger">{error}</div>}
-
-        <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? 'Resetting...' : 'Reset Password'}
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

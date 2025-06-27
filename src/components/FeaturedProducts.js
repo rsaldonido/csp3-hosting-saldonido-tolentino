@@ -1,52 +1,76 @@
 import { useState, useEffect } from 'react';
-import { CardGroup } from 'react-bootstrap'
-import { Link } from 'react-router-dom';
-import PreviewProducts from './PreviewProducts'
+import { Row, Container, Col } from 'react-bootstrap';
+import PreviewProducts from './PreviewProducts';
+import '../styles/FeaturedProducts.css';
 
-export default function FeaturedProducts(){
+export default function FeaturedProducts() {
+    const [previews, setPreviews] = useState([]);
+    const [isReady, setIsReady] = useState(false); 
 
-	const [previews, setPreviews] = useState([])
+    useEffect(() => {
+        let isMounted = true; 
 
-	useEffect(() => {
-		fetch("http://localhost:4000/products/active")
-		.then(res => res.json())
-		.then(data => {
-			console.log(data)
+        fetch("http://localhost:4000/products/active")
+            .then(res => res.json())
+            .then(data => {
+                if (!isMounted) return;
 
-			const numbers = []
-			const featured = []
+                const numbers = [];
+                const featured = [];
 
-			const generateRandomNums = () => {
-				let randomNum = Math.floor(Math.random() * data.length)
+                
+                while (numbers.length < Math.min(5, data.length)) {
+                    const randomNum = Math.floor(Math.random() * data.length);
+                    if (!numbers.includes(randomNum)) {
+                        numbers.push(randomNum);
+                    }
+                }
 
-				if(numbers.indexOf(randomNum) === -1){
-					numbers.push(randomNum)
-				}else{
-					generateRandomNums()
-				}
-			}
+                
+                numbers.forEach(index => {
+                    featured.push(data[index]);
+                });
 
-			for(let i = 0; i < 5; i++){
-				generateRandomNums()
+                
+                if (isMounted) {
+                    setPreviews(featured);
+                    setIsReady(true);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching products:", error);
+                if (isMounted) setIsReady(true); // Still show something even if error
+            });
 
-				featured.push(
+        return () => {
+            isMounted = false; 
+        };
+    }, []);
 
-					<PreviewProducts data={data[numbers[i]]} key={data[numbers[i]]._id} breakPoint={2} />
-					) 
-			}
+    
+    if (!isReady) {
+        return null;
+    }
 
-			setPreviews(featured)
-		})
-	}, [])
-
-	return(
-		<>
-			<div className="featured-products-container">
-		        <h2 className="text-center">Featured Products</h2>
-		        <CardGroup className="justify-content-center">
-		            {previews}
-		        </CardGroup>
-		    </div>
-		</>
-	)
+    return (
+        <Container fluid className="featured-products-container">
+            {/* Title with animation class that will trigger immediately since we're ready */}
+            <h2 className="text-center mb-4 featured-product-title animate">
+                Featured Products
+            </h2>
+            
+            {/* Products grid - only renders when ready */}
+            <Row className="g-3 justify-content-center">
+                {previews.map((product) => (
+                    <Col 
+                        key={product._id} 
+                        xs={12} sm={6} md={4} lg={true} 
+                        style={{ maxWidth: '300px' }}
+                    >
+                        <PreviewProducts data={product} />
+                    </Col>
+                ))}
+            </Row>
+        </Container>
+    );
 }

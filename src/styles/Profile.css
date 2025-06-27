@@ -1,0 +1,146 @@
+/* Profile.css - Tech-themed styling for user profile page */
+
+.profile-container {
+    /* No specific background or min-height here as per instruction */
+    padding: 2rem 0;
+}
+
+.profile-header-card {
+    background: linear-gradient(145deg, #1f2937 0%, #111827 100%);
+    border: 1px solid #374151;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.4),
+        0 1px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    color: #f3f4f6;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    animation: slideInDown 0.6s ease-out;
+}
+
+.profile-header-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 212, 255, 0.1),
+        transparent
+    );
+    transition: left 0.6s;
+}
+
+.profile-header-card:hover::before {
+    left: 100%;
+}
+
+.profile-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #00d4ff 0%, #00ff88 50%, #ff6b35 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.profile-title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.profile-name {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #00ff88;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.profile-hr {
+    border-top: 2px solid #374151;
+    margin: 1.5rem 0;
+}
+
+.contacts-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #00d4ff;
+    margin-bottom: 1rem;
+}
+
+.contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contact-list li {
+    font-size: 1.1rem;
+    color: #d1d5db;
+    margin-bottom: 0.5rem;
+}
+
+.contact-list li::before {
+    content: "•";
+    color: #00ff88;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.profile-forms-container {
+    padding-bottom: 2rem;
+}
+
+.loading-profile-message {
+    text-align: center;
+    padding: 3rem 0;
+    color: #00d4ff;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .profile-header-card {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .profile-title {
+        font-size: 2.2rem;
+    }
+    
+    .profile-name {
+        font-size: 1.8rem;
+    }
+    
+    .contacts-title {
+        font-size: 1.3rem;
+    }
+    
+    .contact-list li {
+        font-size: 1rem;
+    }
+    
+    .loading-profile-message {
+        font-size: 1.2rem;
+    }
+}

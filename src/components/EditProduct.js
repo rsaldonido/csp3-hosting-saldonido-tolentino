@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form, Spinner } from 'react-bootstrap';
 import { Notyf } from 'notyf';
 import PropTypes from 'prop-types';
+import '../styles/EditProduct.css';
 
 export default function EditProduct({ product, fetchData }) {
   const notyf = new Notyf();
@@ -68,69 +69,80 @@ export default function EditProduct({ product, fetchData }) {
         variant="outline-primary"
         size="sm"
         onClick={handleShow}
-        className="fw-normal text-nowrap px-3"
+        className="edit-product-btn"
       >
         Update
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} className="edit-product-modal">
         <Modal.Header closeButton>
           <Modal.Title>Update Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleUpdate}>
-            <Form.Group className="mb-3">
+            <Form.Group className="form-group-tech-modal mb-3">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                className="form-control-tech-modal"
               />
             </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Description</Form.Label>
+            <Form.Group className="form-group-tech-modal mb-3">
+              <Form.Label className="form-label-tech-modal">Description</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
+                className="form-control-tech-modal"
               />
             </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Price</Form.Label>
+            <Form.Group className="form-group-tech-modal mb-3">
+              <Form.Label className="form-label-tech-modal">Price</Form.Label>
               <Form.Control
                 type="number"
                 step="0.01"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
+                className="form-control-tech-modal"
               />
             </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Product Image</Form.Label>
+            <Form.Group className="form-group-tech-modal mb-3">
+              <Form.Label className="form-label-tech-modal">Product Image</Form.Label>
               <Form.Control
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
+                className="form-control-tech-modal"
               />
               {image && (
-                <div className="mt-2">
+                <div className="mt-2 text-center">
                   <img 
                     src={image} 
                     alt="Preview" 
-                    style={{ maxWidth: '100%', maxHeight: '200px' }} 
+                    className="image-preview-modal"
                   />
                 </div>
               )}
             </Form.Group>
-            <div className="d-flex justify-content-end gap-2">
+            <div className="modal-footer-buttons d-flex justify-content-end gap-2">
               <Button variant="secondary" onClick={handleClose}>
                 Cancel
               </Button>
               <Button variant="primary" type="submit" disabled={isLoading}>
-                {isLoading ? 'Updating...' : 'Update'}
+                {isLoading ? (
+                  <>
+                    <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="loading-spinner-modal" />
+                    Updating...
+                  </>
+                ) : (
+                  'Update'
+                )}
               </Button>
             </div>
           </Form>

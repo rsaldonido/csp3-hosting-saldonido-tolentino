@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
+import '../styles/MyOrders.css';
 
 export default function MyOrders() {
     const notyf = new Notyf();
@@ -117,7 +118,7 @@ export default function MyOrders() {
     if (isLoading) {
         return (
             <Container className="mt-5 text-center">
-                <Spinner animation="border" role="status">
+                <Spinner animation="border" role="status" className="loading-spinner-myorders">
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>
             </Container>
@@ -127,12 +128,12 @@ export default function MyOrders() {
     if (error) {
         return (
             <Container className="mt-5">
-                <Alert variant="danger">
+                <Alert variant="danger" className="alert-tech-myorders alert-danger">
                     {error}
                     <Button 
                         variant="primary" 
                         onClick={fetchOrders}
-                        className="ms-3"
+                        className="ms-3 alert-tech-btn-primary"
                     >
                         Retry
                     </Button>
@@ -144,10 +145,10 @@ export default function MyOrders() {
     if (!user.id) {
         return (
             <Container className="mt-5">
-                <Alert variant="warning">
+                <Alert variant="warning" className="alert-tech-myorders alert-warning">
                     Please log in to view your orders
                     <div className="mt-3">
-                        <Button variant="primary" onClick={() => navigate('/login')}>
+                        <Button variant="primary" onClick={() => navigate('/login')} className="alert-tech-btn-primary">
                             Log In
                         </Button>
                     </div>
@@ -159,10 +160,10 @@ export default function MyOrders() {
     if (orders.length === 0) {
         return (
             <Container className="mt-5">
-                <Alert variant="info">
+                <Alert variant="info" className="alert-tech-myorders alert-info">
                     You haven't placed any orders yet
                     <div className="mt-3">
-                        <Button variant="primary" onClick={() => navigate('/products')}>
+                        <Button variant="primary" onClick={() => navigate('/products')} className="alert-tech-btn-primary">
                             Browse Products
                         </Button>
                     </div>
@@ -173,9 +174,9 @@ export default function MyOrders() {
 
 
     return (
-        <Container className="mt-5">
-            <h2 className="mb-4">My Orders</h2>
-            <Table striped bordered hover responsive>
+        <Container className="my-orders-container mt-5">
+            <h2 className="my-orders-title mb-4">My Orders</h2>
+            <Table striped bordered hover responsive className="my-orders-table">
                 <thead>
                     <tr className="text-center">
                         <th>Order #</th>
@@ -190,10 +191,10 @@ export default function MyOrders() {
                 <tbody>
                     {orders.map(order => (
                         <tr key={order._id} className="align-middle">
-                            <td>{order._id.slice(-6).toUpperCase()}</td>
+                            <td className="order-id-display">{order._id.slice(-6).toUpperCase()}</td>
                             <td>{new Date(order.orderedOn).toLocaleDateString()}</td>
                             <td>
-                                <ul className="mb-0">
+                                <ul className="order-items-list mb-0 list-unstyled text-center">
                                     {order.productsOrdered.map(item => (
                                         <li key={item.productId}>
                                             {products[item.productId]?.name || 'Loading...'}
@@ -210,12 +211,12 @@ export default function MyOrders() {
                                     ))}
                                 </ul>
                             </td>
-                            <td>&#8369; {order.totalPrice.toFixed(2)}</td>
+                            <td className="order-total-price">&#8369; {order.totalPrice.toFixed(2)}</td>
                             <td className="text-center">
-                                <Badge bg={
-                                    order.status === 'Pending' ? 'warning' :
-                                    order.status === 'Shipped Out' ? 'info' :
-                                    order.status === 'Completed' ? 'success' : 'danger'
+                                <Badge className={
+                                    order.status === 'Pending' ? 'status-badge-myorders status-pending-myorders' :
+                                    order.status === 'Dispatched' ? 'status-badge-myorders status-dispatched-myorders' :
+                                    order.status === 'Completed' ? 'status-badge-myorders status-completed-myorders' : 'status-badge-myorders status-cancelled-myorders'
                                 }>
                                     {order.status}
                                 </Badge>
@@ -226,6 +227,7 @@ export default function MyOrders() {
                                         variant="danger" 
                                         size="sm"
                                         onClick={() => cancelOrder(order._id)}
+                                        className="cancel-order-btn"
                                     >
                                         Cancel Order
                                     </Button>

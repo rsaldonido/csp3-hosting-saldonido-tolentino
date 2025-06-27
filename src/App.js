@@ -1,3 +1,4 @@
+// App.js
 import { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -25,7 +26,6 @@ import AddProduct from './pages/AddProduct';
 import Cart from './pages/Cart';
 import MyOrders from './pages/MyOrders';
 
-/* adds the selected icons to the Font Awesome icon library */
 library.add(faFacebookF, faYoutube, faInstagram, faMapMarkerAlt, faPhone, faEnvelope);
 
 function App() {
@@ -37,7 +37,7 @@ function App() {
 
   function unsetUser() {
     localStorage.clear();
-  };
+  }
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -80,34 +80,32 @@ function App() {
     }
   }, []);
 
-
   if (isLoading) {
     return <Loading />; 
   }
-
 
   return (
     <UserProvider value={{ user, setUser, unsetUser }}>
       <Router>
         <div className="d-flex flex-column min-vh-100">
           <AppNavbar />
-            <main className="flex-grow-1">
-              <Container fluid className="p-3">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="*" element={<Error />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/logout" element={<Logout />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/products" element={<Products />} />
-                  <Route path="/products/:productId" element={<ProductView />} />
-                  <Route path="/addProduct" element={<AddProduct />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/myOrders" element={<MyOrders />} />
-                </Routes>
-              </Container>
-            </main>
+          <main className="flex-grow-1 main-content">
+            <Container fluid className="p-3">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="*" element={<Error />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/products/:productId" element={<ProductView />} />
+                <Route path="/addProduct" element={<AddProduct />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/myOrders" element={<MyOrders />} />
+              </Routes>
+            </Container>
+          </main>
           <Footer />
         </div>    
       </Router>

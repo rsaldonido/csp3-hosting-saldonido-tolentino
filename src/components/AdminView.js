@@ -5,6 +5,7 @@ import ArchiveProduct from './ArchiveProduct';
 import PropTypes from 'prop-types';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
+import '../styles/AdminView.css';
 
 const AdminOrders = () => {
     const notyf = new Notyf();
@@ -85,27 +86,27 @@ const AdminOrders = () => {
     }
 
     return (
-        <Table striped bordered hover responsive className="mt-3">
+        <Table striped bordered hover responsive className="admin-table mt-3">
             <thead>
-                <tr className="text-center">
-                    <th>Order ID</th>
-                    <th>Ordered On</th>
-                    <th>User Email</th>
-                    <th>Products</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                <tr>
+                    <th className="text-start">Order#</th> 
+                    <th className="text-start">Date</th> 
+                    <th className="text-start">User Email</th>
+                    <th className="text-center">Products</th>
+                    <th className="text-center">Total</th>
+                    <th className="text-center">Status</th>
+                    <th className="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody className="align-middle">
                 {orders.length > 0 ? (
                     orders.map(order => (
                         <tr key={order._id}>
-                            <td>{order._id.slice(-6).toUpperCase()}</td>
-                            <td>{new Date(order.orderedOn).toLocaleDateString()}</td>
-                            <td>{users[order.userId] || 'Loading...'}</td>
+                            <td className="order-id-admin text-start">{order._id.slice(-6).toUpperCase()}</td>
+                            <td className="text-start">{new Date(order.orderedOn).toLocaleDateString()}</td>
+                            <td className="text-center">{users[order.userId] || 'Loading...'}</td>
                             <td>
-                                <ul className="mb-0">
+                                <ul className="text-start mb-0">
                                     {order.productsOrdered.map(item => (
                                         <li key={item.productId}>
                                             {products[item.productId] || 'Loading...'} (Qty: {item.quantity})
@@ -113,24 +114,24 @@ const AdminOrders = () => {
                                     ))}
                                 </ul>
                             </td>
-                            <td>&#8369; {order.totalPrice.toFixed(2)}</td>
+                            <td className="order-total-admin text-center">&#8369; {order.totalPrice.toFixed(2)}</td>
                             <td className="text-center">
-                                <span className={`badge ${
-                                    order.status === 'Pending' ? 'bg-warning' :
-                                    order.status === 'Shipped Out' ? 'bg-info' :
-                                    order.status === 'Completed' ? 'bg-success' : 'bg-danger'
+                                <span className={`status-badge-admin ${
+                                    order.status === 'Pending' ? 'status-pending-admin' :
+                                    order.status === 'Dispatched' ? 'status-dispatched-admin' :
+                                    order.status === 'Completed' ? 'status-completed-admin' : 'status-cancelled-admin'
                                 }`}>
                                     {order.status}
                                 </span>
                             </td>
-                            <td>
+                            <td className="text-center">
                                 <select 
-                                    className="form-select form-select-sm"
+                                    className="admin-select-status"
                                     value={order.status}
                                     onChange={(e) => updateStatus(order._id, e.target.value)}
                                 >
                                     <option value="Pending">Pending</option>
-                                    <option value="Shipped Out">Shipped Out</option>
+                                    <option value="Dispatched">Dispatched</option>
                                     <option value="Completed">Completed</option>
                                     <option value="Cancelled">Cancelled</option>
                                 </select>
@@ -159,10 +160,10 @@ export default function AdminView({ productsData, fetchData }) {
                 activeKey={activeTab}
                 onSelect={(k) => setActiveTab(k)}
                 id="admin-tabs"
-                className="mb-4"
+                className="admin-tabs mb-4"
             >
                 <Tab eventKey="products" title="Products">
-                    <Table striped bordered hover responsive className="align-middle">
+                    <Table striped bordered hover responsive className="admin-table align-middle">
                         <thead>
                             <tr className="text-center">
                                 <th>Name</th>
@@ -177,7 +178,7 @@ export default function AdminView({ productsData, fetchData }) {
                                 <tr key={product._id}>
                                     <td>{product.name}</td>
                                     <td>{product.description}</td>
-                                    <td>&#8369; {product.price.toFixed(2)}</td>
+                                    <td className="order-total-admin">&#8369; {product.price.toFixed(2)}</td>
                                     <td className={product.isActive ? "text-success" : "text-danger"}>
                                         {product.isActive ? "Available" : "Unavailable"}
                                     </td>

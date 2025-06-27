@@ -1,18 +1,22 @@
-/* === General Styles === */
+/* AppNavbar.css - Tech-themed styling for the navigation bar */
+
 .navbar-light-navy {
-  background-color: #2c2c2c;
-  box-shadow: 0 11px 12px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(145deg, #1f2937 0%, #111827 100%); /* Dark background */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Deeper shadow */
   font-size: 1.4rem;
+  border-bottom: 1px solid #374151; /* Subtle border */
 }
 
 .navbar-light-navy .nav-link,
 .navbar-light-navy .navbar-brand {
-  color: #ffffff;
+  color: #f3f4f6; /* Light text color */
+  transition: all 0.3s ease;
 }
 
 .navbar-light-navy .nav-link:hover,
 .navbar-light-navy .nav-link.active {
-  color: #ff4b4b;
+  color: #00d4ff; /* Blue accent on hover/active */
+  transform: translateY(-2px);
 }
 
 /* === Mobile Icon Container === */
@@ -31,10 +35,10 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: #2c2c2c;
+  background: linear-gradient(145deg, #1f2937 0%, #111827 100%); /* Dark background */
   margin-top: 0.8rem;
   padding-bottom: 0.7rem;
-  border: none;
+  border: 1px solid #374151; /* Border color */
   opacity: 0;
   transform: translateY(-10px);
   pointer-events: none;
@@ -42,7 +46,7 @@
   min-width: 6rem;
   border-radius: 0.5rem;
   transition: opacity 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Darker shadow */
 }
 
 .animated-dropdown-menu.show,
@@ -53,10 +57,10 @@
 }
 
 .dropdown-item {
-  color: #ffffff;
+  color: #d1d5db; /* Secondary text color */
   background-color: transparent;
   padding: 0.5rem 1rem;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease;
   display: block;
   width: 100%;
   text-align: left;
@@ -64,7 +68,8 @@
 }
 
 .dropdown-item:hover {
-  color: #ff4b4b;
+  color: #00d4ff; /* Blue accent on hover */
+  background-color: rgba(0, 212, 255, 0.1); /* Subtle blue background on hover */
 }
 
 /* === Hamburger Icon === */
@@ -77,18 +82,23 @@
   border: none;
   background: none;
   cursor: pointer;
+  transition: transform 0.5s ease;
 }
 
 .hamburger-icon span {
   height: 3px;
-  background: #fff;
+  background: #f3f4f6; /* Light color for lines */
   border-radius: 2px;
   transition: all 0.3s ease;
 }
 
+.hamburger-icon.open {
+  transform: rotate(180deg);
+}
+
 .hamburger-icon.open span:nth-child(1) {
-  transform: rotate(45deg) translate(4px, 4px);
-  background: #ff4b4b;
+  transform: rotate(45deg) translate(4px, 7px);
+  background: #00d4ff; /* Blue accent when open */
 }
 
 .hamburger-icon.open span:nth-child(2) {
@@ -96,8 +106,8 @@
 }
 
 .hamburger-icon.open span:nth-child(3) {
-  transform: rotate(-45deg) translate(4px, -4px);
-  background: #ff4b4b;
+  transform: rotate(-45deg) translate(4px, -6px);
+  background: #00d4ff; /* Blue accent when open */
 }
 
 /* === Hamburger Panel === */
@@ -105,17 +115,18 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: #2c2c2c;
+  background: linear-gradient(145deg, #1f2937 0%, #111827 100%); /* Dark background */
   margin-top: 0.8rem;
   padding: 1rem;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Darker shadow */
   opacity: 0;
   transform: translateX(20px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
   min-width: 9rem;
   z-index: 1000;
+  border: 1px solid #374151; /* Border color */
 }
 
 .hamburger-menu.show {
@@ -140,7 +151,7 @@
   transform: translateX(-50%);
   width: 0;
   height: 2px;
-  background-color: #007bff;
+  background-color: #00d4ff; /* Blue accent for underline */
   transition: width 0.3s ease;
 }
 
@@ -176,8 +187,8 @@
 .nav-icon-button {
   background: none;
   border: none;
-  color: #ffffff;
-  font-size: 1.4rem; /* Match with .nav-link */
+  color: #f3f4f6; /* Light text color */
+  font-size: 1.4rem;
   font-weight: 400;
   cursor: pointer;
   padding: 0.2rem 0.75rem;
@@ -186,47 +197,6 @@
   line-height: 1.5;
 }
 
-
 .nav-icon-button:hover {
-  color: #ff4b4b;
-}
-
-
-/* Spin animation for hamburger wrapper */
-.hamburger-icon {
-  width: 24px;
-  height: 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border: none;
-  background: none;
-  cursor: pointer;
-  transition: transform 0.5s ease; /* <-- added */
-}
-
-.hamburger-icon.open {
-  transform: rotate(180deg); /* or 360deg for full spin */
-}
-
-/* Existing line animations (already in your CSS) */
-.hamburger-icon span {
-  height: 3px;
-  background: #fff;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-.hamburger-icon.open span:nth-child(1) {
-  transform: rotate(45deg) translate(4px, 7px);
-  background: #ff4b4b;
-}
-
-.hamburger-icon.open span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger-icon.open span:nth-child(3) {
-  transform: rotate(-45deg) translate(4px, -6px);
-  background: #ff4b4b;
+  color: #00d4ff; /* Blue accent on hover */
 }

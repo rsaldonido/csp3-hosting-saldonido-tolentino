@@ -1,0 +1,113 @@
+/* UserView.css - Tech-themed styling for user product display */
+
+.user-view-container {
+    /* No specific background or min-height here as per instruction */
+    padding: 2rem 0;
+}
+
+.search-filter-form {
+    background: linear-gradient(145deg, #1f2937 0%, #111827 100%);
+    border: 1px solid #374151;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 
+        0 5px 15px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.search-filter-form:hover {
+    border-color: #00d4ff;
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(0, 212, 255, 0.2);
+}
+
+.form-control-tech-search {
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid #374151;
+    border-radius: 8px;
+    color: #f3f4f6;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control-tech-search:focus {
+    background: rgba(17, 24, 39, 1);
+    border-color: #00d4ff;
+    box-shadow: 
+        0 0 0 0.2rem rgba(0, 212, 255, 0.25),
+        0 0 10px rgba(0, 212, 255, 0.3);
+    color: #ffffff;
+}
+
+.form-control-tech-search::placeholder {
+    color: #9ca3af;
+}
+
+.filter-label-tech {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #00d4ff;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.product-grid-container {
+    padding: 0 15px;
+}
+
+.no-products-message {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: #9ca3af;
+    font-size: 1.2rem;
+    background: linear-gradient(145deg, rgba(17, 24, 39, 0.5) 0%, rgba(31, 41, 55, 0.5) 100%);
+    border-radius: 16px;
+    margin: 2rem auto;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.no-products-message h4 {
+    color: #00d4ff;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.no-products-message p {
+    color: #d1d5db;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .user-view-container {
+        padding: 1rem 0;
+    }
+    
+    .search-filter-form {
+        padding: 1rem;
+        margin: 0 15px 1.5rem 15px;
+    }
+    
+    .form-control-tech-search {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .filter-label-tech {
+        font-size: 0.8rem;
+    }
+    
+    .no-products-message {
+        padding: 2rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .no-products-message h4 {
+        font-size: 1.5rem;
+    }
+}

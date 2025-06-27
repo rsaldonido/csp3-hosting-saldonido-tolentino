@@ -6,7 +6,7 @@ export default function PreviewProducts(props){
 
 	const { breakPoint, data } = props;
 
-	const { _id, name, description, price } = data;
+	const { _id, image, name, price } = data;
 
 	return(
 		<Col xs={12} md={ breakPoint }>
@@ -14,9 +14,22 @@ export default function PreviewProducts(props){
 				<Card.Body>
 					<Card.Title className="text-center">
 						{/*Add the specific details of course link*/}
-						<Link to={`/products/${_id}`}>{ name }</Link>
+						<Link to={`/products/${_id}`}>{ name }</Link> 
 					</Card.Title>
-					<Card.Text>{ description }</Card.Text>
+					<Card.Text>
+                        {image ? ( // Conditional rendering based on 'image' existence
+                            <img 
+                                src={image} 
+                                alt="Preview" 
+                                style={{ maxWidth: '100%', maxHeight: '200px' }} 
+                            />
+                        ) : (
+                            <div className="product-card-no-image">
+                            	<span className="no-image-icon"></span>
+                                	No Image Available
+                            </div>
+                        )}
+                    </Card.Text>
 					
 				</Card.Body>
 				<Card.Footer>

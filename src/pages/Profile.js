@@ -5,6 +5,7 @@ import ResetPassword from '../components/ResetPassword';
 import UpdateProfile from '../components/UpdateProfile';
 import { Notyf } from 'notyf';
 import UserContext from '../context/UserContext';
+import '../styles/Profile.css';
 
 export default function Profile() {
 	const notyf = new Notyf();
@@ -55,7 +56,7 @@ export default function Profile() {
 	if (loading || !details) {
 	    return (
 	        <Container className="mt-5 text-center">
-	            <h4>Loading profile...</h4>
+	            <h4 className="loading-profile-message">Loading profile...</h4>
 	        </Container>
 	    );
 	}
@@ -64,19 +65,19 @@ export default function Profile() {
 	return (
 
 
-		<>
-			<Container className="mt-5 p-5 bg-primary text-white">
-				<h1 className="mb-5 ">Profile</h1>
-				<h2 className="mt-3">{`${details.firstName} ${details.lastName}`}</h2>
-				<hr />
-				<h4>Contacts</h4>
-				<ul>
+		<div className="profile-container">
+			<Container className="profile-header-card mt-5">
+				<h1 className="profile-title mb-5 ">Profile</h1>
+				<h2 className="profile-name mt-3">{`${details.firstName} ${details.lastName}`}</h2>
+				<hr className="profile-hr"/>
+				<h4 className="contacts-title">Contacts</h4>
+				<ul className="contact-list">
 					<li>Email: {details.email}</li>
 					<li>Mobile No: {details.mobileNo}</li>
 				</ul>
 			</Container>
 
-			<Container className="pb-5">
+			<Container className="profile-forms-container pb-5">
 				<Row>
 					<Col md={6}>
 						<ResetPassword />
@@ -90,6 +91,6 @@ export default function Profile() {
 					</Col>
 				</Row>
 			</Container>
-		</>
+		</div>
 	);
 }

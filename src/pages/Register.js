@@ -3,6 +3,11 @@ import { Form, Button } from 'react-bootstrap';
 import { Navigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import { Notyf } from 'notyf';
+import '../styles/Register.css';
+
+// Import Font Awesome components and icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faLock, faUser, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default function Register() {
 
@@ -59,7 +64,7 @@ export default function Register() {
 			mobileNo: mobileNo,
 			password: password
 
-		})
+		} )
 		})
 		.then(res => res.json())
 		.then(data => {
@@ -90,80 +95,109 @@ export default function Register() {
     	(user.id !== null) ?
     		<Navigate to="/login" />
     		:
-			<Form onSubmit={(e) => registerUser(e)}>
-				<h1 className="my-5 text-center">Register</h1>
-				<Form.Group>
-					<Form.Label>First Name:</Form.Label>
-					<Form.Control 
-						type="text" 
-						placeholder="Enter First Name" 
-						required 
-						value={firstName}
-						onChange={e => {setFirstName(e.target.value)}}
-					/>
-				</Form.Group>
-				<Form.Group>
-					<Form.Label>Last Name:</Form.Label>
-					<Form.Control 
-						type="text" 
-						placeholder="Enter Last Name" 
-						required
-						value={lastName}
-						onChange={e => {setLastName(e.target.value)}}
-					/>
-				</Form.Group>
-				<Form.Group>
-					<Form.Label>Email:</Form.Label>
-					<Form.Control 
-						type="email" 
-						placeholder="Enter Email" 
-						required
-						value={email}
-						onChange={e => {setEmail(e.target.value)}}
-					/>
-				</Form.Group>
-				<Form.Group>
-					<Form.Label>Mobile No:</Form.Label>
-					<Form.Control 
-						type="number" 
-						placeholder="Enter 11 Digit No." 
-						required  
-						value={mobileNo}
-						onChange={e => {setMobileNo(e.target.value)}}
-					/>
-				</Form.Group>
-				<Form.Group>
-					<Form.Label>Password:</Form.Label>
-					<Form.Control 
-						type="password" 
-						placeholder="Enter Password" 
-						required 
-						value={password}
-						onChange={e => {setPassword(e.target.value)}}
-					/>
-				</Form.Group>
-				<Form.Group className="mb-3">
-					<Form.Label>Confirm Password:</Form.Label>
-					<Form.Control 
-						type="password" 
-						placeholder="Confirm Password" 
-						required 
-						value={confirmPassword}
-						onChange={e => {setConfirmPassword(e.target.value)}}
-					/>
-				</Form.Group>
-	            {/* conditionally render submit button based on isActive state */}
-	    	    { isActive ? 
-	    	    	<Button variant="primary" type="submit" id="submitBtn">
-	    	    		Submit
-	    	    	</Button>
-	    	        : 
-	    	        <Button variant="danger" type="submit" id="submitBtn" disabled>
-	    	        	Submit
-	    	        </Button>
-	    	    }
-					
-			</Form>
-    )
+    		<div className="register-container">
+    		    <div className="row justify-content-center">
+    		        <div className="col-lg-6 col-md-8">
+    		            <Form onSubmit={(e) => registerUser(e)} className="register-form">
+    		                <h1 className="register-title">Register</h1>
+    		                <Form.Group className="form-group-register">
+    		                    <Form.Label className="form-label-register">
+                                    <FontAwesomeIcon icon={faUser} className="me-2" />
+                                    First Name:
+                                </Form.Label>
+    		                    <Form.Control 
+    		                        type="text" 
+    		                        placeholder="Enter First Name" 
+    		                        required 
+    		                        value={firstName}
+    		                        onChange={e => {setFirstName(e.target.value)}}
+    		                        className="form-control-register"
+    		                    />
+    		                </Form.Group>
+    		                <Form.Group className="form-group-register">
+    		                    <Form.Label className="form-label-register">
+                                    <FontAwesomeIcon icon={faUser} className="me-2" />
+                                    Last Name:
+                                </Form.Label>
+    		                    <Form.Control 
+    		                        type="text" 
+    		                        placeholder="Enter Last Name" 
+    		                        required
+    		                        value={lastName}
+    		                        onChange={e => {setLastName(e.target.value)}}
+    		                        className="form-control-register"
+    		                    />
+    		                </Form.Group>
+    		                <Form.Group className="form-group-register">
+    		                    <Form.Label className="form-label-register">
+                                    <FontAwesomeIcon icon={faEnvelope} className="me-2" />
+                                    Email:
+                                </Form.Label>
+    		                    <Form.Control 
+    		                        type="email" 
+    		                        placeholder="Enter Email" 
+    		                        required
+    		                        value={email}
+    		                        onChange={e => {setEmail(e.target.value)}}
+    		                        className="form-control-register"
+    		                    />
+    		                </Form.Group>
+    		                <Form.Group className="form-group-register"> 
+    		                    <Form.Label className="form-label-register">
+                                    <FontAwesomeIcon icon={faMobileAlt} className="me-2" />
+                                    Mobile No:
+                                </Form.Label>
+    		                    <Form.Control 
+    		                        type="number" 
+    		                        placeholder="Enter 11 Digit No." 
+    		                        required  
+    		                        value={mobileNo}
+    		                        onChange={e => {setMobileNo(e.target.value)}}
+    		                        className="form-control-register"
+    		                    />
+    		                </Form.Group>
+    		                <Form.Group className="form-group-register">
+    		                    <Form.Label className="form-label-register">
+                                    <FontAwesomeIcon icon={faLock} className="me-2" />
+                                    Password:
+                                </Form.Label>
+    		                    <Form.Control 
+    		                        type="password" 
+    		                        placeholder="Enter Password" 
+    		                        required 
+    		                        value={password}
+    		                        onChange={e => {setPassword(e.target.value)}}
+    		                        className="form-control-register"
+    		                    />
+    		                </Form.Group>
+    		                <Form.Group className="form-group-register mb-3">
+    		                    <Form.Label className="form-label-register"> 
+                                    <FontAwesomeIcon icon={faLock} className="me-2" />
+                                    Confirm Password:
+                                </Form.Label>
+    		                    <Form.Control 
+    		                        type="password" 
+    		                        placeholder="Confirm Password" 
+    		                        required 
+    		                        value={confirmPassword}
+    		                        onChange={e => {setConfirmPassword(e.target.value)}}
+    		                        className="form-control-register"
+    		                    />
+    		                </Form.Group>
+    		                {/* conditionally render submit button based on isActive state */}
+    		                { isActive ? 
+    		                    <Button variant="primary" type="submit" id="submitBtn" className="submit-btn-tech"> 
+    		                        Submit
+    		                    </Button>
+    		                    : 
+    		                    <Button variant="danger" type="submit" id="submitBtn" disabled className="submit-btn-tech"> 
+    		                        Submit
+    		                    </Button>
+    		                }
+    		            </Form>
+    		        </div>
+    		    </div>
+    		</div>
+   )
 
 }

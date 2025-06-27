@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
+import '../styles/Cart.css';
 
 export default function CartView() {
     const notyf = new Notyf();
@@ -184,15 +185,16 @@ export default function CartView() {
     const renderCartItems = () => {
         return cart.cartItems.map(item => (
             <tr key={item.productId}>
-                <td>{products[item.productId]?.name || 'Loading...'}</td>
-                <td>&#8369; {(item.subtotal / item.quantity).toFixed(2)}</td>
-                <td>
-                    <div className="d-flex align-items-center">
+                <td className="text-start">{products[item.productId]?.name || 'Loading...'}</td>
+                <td className="text-center">&#8369; {(item.subtotal / item.quantity).toFixed(2)}</td>
+                <td className="text-center">
+                    <div className="quantity-controls-cart">
                         <Button
                             variant="outline-secondary"
                             size="sm"
                             onClick={() => updateQuantity(item.productId, item.quantity - 1)}
                             disabled={item.quantity <= 1}
+                            className="quantity-btn-cart"
                         >
                             -
                         </Button>
@@ -207,24 +209,25 @@ export default function CartView() {
                                     handleQuantitySubmit(item.productId, e.target.value);
                                 }
                             }}
-                            className="mx-2 text-center"
-                            style={{ width: '60px' }}
+                            className="quantity-input-cart"
                         />
                         <Button
                             variant="outline-secondary"
                             size="sm"
                             onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                            className="quantity-btn-cart"
                         >
                             +
                         </Button>
                     </div>
                 </td>
-                <td>&#8369; {item.subtotal.toFixed(2)}</td>
+                <td className="text-center">&#8369; {item.subtotal.toFixed(2)}</td>
                 <td className = "text-center">
                     <Button 
                         variant="danger"
                         size="sm"
                         onClick={() => removeItem(item.productId)}
+                        className="remove-item-btn"
                     >
                         Remove
                     </Button>
@@ -236,7 +239,7 @@ export default function CartView() {
     if (isLoading) {
         return (
             <Container className="mt-5 text-center">
-                <Spinner animation="border" role="status">
+                <Spinner animation="border" role="status" className="loading-spinner-cart">
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>
             </Container>
@@ -246,7 +249,7 @@ export default function CartView() {
     if (error) {
         return (
             <Container className="mt-5">
-                <Alert variant="danger">{error}</Alert>
+                <Alert variant="danger" className="alert-tech alert-danger">{error}</Alert>
             </Container>
         );
     }
@@ -254,7 +257,14 @@ export default function CartView() {
     if (!user.id) {
         return (
             <Container className="mt-5">
-                <Alert variant="warning">Please log in to view your cart</Alert>
+                <Alert variant="warning" className="alert-tech-myorders alert-warning">
+                    Please log in to view your cart
+                    <div className="mt-3">
+                        <Button variant="primary" onClick={() => navigate('/login')} className="alert-tech-btn-primary">
+                            Log In
+                        </Button>
+                    </div>
+                </Alert>
             </Container>
         );
     }
@@ -262,8 +272,8 @@ export default function CartView() {
     if (!cart || cart.cartItems.length === 0) {
         return (
             <Container className="mt-5">
-                <Alert variant="info">Your cart is empty</Alert>
-                <Button variant="primary" onClick={() => navigate('/products')}>
+                <Alert variant="info" className="alert-tech alert-info">Your cart is empty</Alert>
+                <Button variant="primary" onClick={() => navigate('/products')} className="alert-tech-btn-primary">
                     Browse Products
                 </Button>
             </Container>
@@ -271,31 +281,31 @@ export default function CartView() {
     }
 
     return (
-        <Container className="mt-5">
-            <h2 className="mb-4">Your Cart</h2>
-            <Table striped bordered hover responsive>
+        <Container className="cart-container mt-5">
+            <h2 className="card-title mb-4">Your Cart</h2>
+            <Table striped bordered hover responsive className="cart-table">
                 <thead>
-                    <tr  className="align-middle text-center">
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                        <th>Actions</th>
+                    <tr  className="align-middle">
+                        <th className="text-start">Product</th>
+                        <th className="text-center">Price</th>
+                        <th className="text-center">Quantity</th>
+                        <th className="text-center">Subtotal</th>
+                        <th className="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody  className="align-middle">{renderCartItems()}</tbody>
                 <tfoot>
                     <tr>
                         <td colSpan="3" className="text-end fw-bold">Total:</td>
-                        <td className="fw-bold">&#8369; {cart.totalPrice.toFixed(2)}</td>
+                        <td className="fw-bold total-price text-end">&#8369; {cart.totalPrice.toFixed(2)}</td>
                         <td></td>
                     </tr>
                 </tfoot>
             </Table>
 
-            <div className="d-flex justify-content-between mt-4">
-                <Button variant="danger" onClick={clearCart}>Clear Cart</Button>
-                <Button variant="success" onClick={checkout}>Checkout</Button>
+            <div className="cart-actions-container mt-4">
+                <Button variant="danger" onClick={clearCart} className="clear-cart-btn">Clear Cart</Button>
+                <Button variant="success" onClick={checkout} className="checkout-btn">Checkout</Button>
             </div>
         </Container>
     );

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Notyf } from 'notyf';
+import '../styles/ArchiveProduct.css';
 
 export default function ArchiveProduct({product, isActive, fetchData}) {
 
@@ -59,17 +60,17 @@ export default function ArchiveProduct({product, isActive, fetchData}) {
  
 
     return(
-        <>
+        <div className="archive-btn-container">
             {isActive ?
 
-                <Button variant="danger" size="sm" onClick={() => archiveToggle()}>Disable</Button>
+                <Button variant="danger" size="sm" onClick={() => archiveToggle()} className="archive-btn">Disable</Button>
 
                 :
 
-                <Button variant="success" size="sm" onClick={() => activateToggle()}>Activate</Button>
+                <Button variant="success" size="sm" onClick={() => activateToggle()} className="activate-btn">Activate</Button>
 
             }
-        </>
+        </div>
 
         )
 }

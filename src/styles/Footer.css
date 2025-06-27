@@ -1,7 +1,9 @@
 /* Footer.css */
 .footer {
-  background: linear-gradient(135deg, #000000 0%, #434343 100%);
-  color: white;
+  background: linear-gradient(145deg, #1f2937 0%, #111827 100%); /* Aligned with product card background */
+  color: #f3f4f6; /* Light text color */
+  border-top: 1px solid #374151; /* Subtle border */
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
 }
 
 .social-links {
@@ -12,15 +14,16 @@
 .social-link {
   width: 36px;
   height: 36px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 212, 255, 0.1); /* Light blue tint */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 10px;
-  color: white;
+  color: #00d4ff; /* Blue accent color */
   transition: all 0.3s ease;
   text-decoration: none;
+  border: 1px solid rgba(0, 212, 255, 0.3);
 }
 
 .social-link:last-child {
@@ -28,14 +31,18 @@
 }
 
 .social-link:hover {
-  background: white;
-  color: #434343;
-  transform: translateY(-3px);
+  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%); /* Blue gradient on hover */
+  color: white;
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
 }
 
 .copyright-bar {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid #374151; /* Aligned with other borders */
   font-size: 0.9rem;
+  padding-top: 1rem;
+  margin-top: 1rem;
+  color: #d1d5db; /* Secondary text color */
 }
 
 /* No responsive override needed - both aligned to start */

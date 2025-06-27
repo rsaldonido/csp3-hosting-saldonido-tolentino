@@ -1,0 +1,191 @@
+/* ArchiveProduct.css - Tech-themed styling for archive/activate buttons */
+
+.archive-btn-container {
+    display: inline-block;
+    position: relative;
+}
+
+.archive-btn,
+.activate-btn {
+    border-radius: 8px;
+    padding: 0.4rem 1rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    border: none;
+    margin: 0.2rem;
+    position: relative;
+    overflow: hidden;
+    min-width: 80px;
+}
+
+.archive-btn::before,
+.activate-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.6s;
+}
+
+.archive-btn:hover::before,
+.activate-btn:hover::before {
+    left: 100%;
+}
+
+/* Disable/Archive button styling */
+.archive-btn {
+    background: linear-gradient(135deg, #ff6b35 0%, #dc2626 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.archive-btn:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #ff6b35 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+.archive-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(255, 107, 53, 0.3);
+}
+
+/* Activate button styling */
+.activate-btn {
+    background: linear-gradient(135deg, #00ff88 0%, #10b981 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+}
+
+.activate-btn:hover {
+    background: linear-gradient(135deg, #10b981 0%, #00ff88 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+}
+
+.activate-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(0, 255, 136, 0.3);
+}
+
+/* Loading state */
+.archive-btn:disabled,
+.activate-btn:disabled {
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 2px 8px rgba(75, 85, 99, 0.3);
+    opacity: 0.7;
+}
+
+.archive-btn:disabled::before,
+.activate-btn:disabled::before {
+    display: none;
+}
+
+/* Icon additions */
+.archive-btn::after {
+    font-size: 0.8rem;
+}
+
+.activate-btn::after {
+    font-size: 0.8rem;
+}
+
+/* Pulse animation on hover */
+@keyframes archivePulse {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    }
+    50% {
+        box-shadow: 0 6px 25px rgba(255, 107, 53, 0.6);
+    }
+}
+
+@keyframes activatePulse {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+    }
+    50% {
+        box-shadow: 0 6px 25px rgba(0, 255, 136, 0.6);
+    }
+}
+
+.archive-btn:hover:not(:disabled) {
+    animation: archivePulse 2s ease-in-out infinite;
+}
+
+.activate-btn:hover:not(:disabled) {
+    animation: activatePulse 2s ease-in-out infinite;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .archive-btn,
+    .activate-btn {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.75rem;
+        min-width: 70px;
+    }
+    
+    .archive-btn::after,
+    .activate-btn::after {
+        font-size: 0.7rem;
+    }
+}
+
+/* Focus states for accessibility */
+.archive-btn:focus,
+.activate-btn:focus {
+    outline: none;
+    box-shadow: 
+        0 0 0 3px rgba(255, 255, 255, 0.1),
+        0 4px 15px rgba(0, 212, 255, 0.4);
+}
+
+/* Success/Error feedback animations */
+@keyframes successFlash {
+    0%, 100% {
+        background: linear-gradient(135deg, #00ff88 0%, #10b981 100%);
+    }
+    50% {
+        background: linear-gradient(135deg, #10b981 0%, #00ff88 100%);
+        transform: scale(1.1);
+    }
+}
+
+@keyframes errorFlash {
+    0%, 100% {
+        background: linear-gradient(135deg, #ff6b35 0%, #dc2626 100%);
+    }
+    50% {
+        background: linear-gradient(135deg, #dc2626 0%, #ff6b35 100%);
+        transform: scale(1.1);
+    }
+}
+
+.archive-btn.success-flash {
+    animation: successFlash 0.6s ease-in-out;
+}
+
+.activate-btn.success-flash {
+    animation: successFlash 0.6s ease-in-out;
+}
+
+.archive-btn.error-flash,
+.activate-btn.error-flash {
+    animation: errorFlash 0.6s ease-in-out;
+}

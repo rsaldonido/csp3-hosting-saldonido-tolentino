@@ -2,27 +2,32 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import '../styles/ProductCard.css';
 
 export default function ProductCard({productProp}) {
   const { _id, name, description, price, image } = productProp;
 
   return (
-    <Card className="h-100">
-      {image && (
+    <Card className="product-card h-100">
+      {image ? (
         <Card.Img 
           variant="top" 
           src={image} 
-          style={{ height: '200px', objectFit: 'cover' }}
+          className="product-card-img"
         />
+      ) : (
+        <div className="product-card-no-image">
+          No Image Available
+        </div>
       )}
-      <Card.Body className="d-flex flex-column">
-        <Card.Title>{name}</Card.Title>
-        <Card.Subtitle>Description:</Card.Subtitle>
-        <Card.Text>{description}</Card.Text>
-        <Card.Subtitle>Price:</Card.Subtitle>
-        <Card.Text>&#8369; {price}</Card.Text>
+      <Card.Body className="product-card-body d-flex flex-column">
+        <Card.Title className="product-card-title">{name}</Card.Title>
+        {/*<Card.Subtitle className="product-card-subtitle">Description:</Card.Subtitle>*/}
+        {/*<Card.Text className="product-card-text">{description}</Card.Text>*/}
+        <Card.Subtitle className="product-card-subtitle">Price:</Card.Subtitle>
+        <Card.Text className="product-card-price">&#8369; {price}</Card.Text>
         <Link 
-          className="btn btn-primary mt-auto" 
+          className="product-details-btn mt-auto" 
           to={`/products/${_id}`}
         >
           Details

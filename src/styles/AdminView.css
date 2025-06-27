@@ -1,0 +1,240 @@
+/* AdminView.css - Tech-themed styling for Admin Dashboard - FIXED HEADERS AND PRICE SPACING */
+
+.admin-tabs .nav-link {
+    color: #9ca3af !important;
+    border: 1px solid transparent;
+    border-radius: 8px 8px 0 0;
+    margin-right: 5px;
+    transition: all 0.3s ease;
+}
+
+.admin-tabs .nav-link:hover {
+    color: #00d4ff !important;
+    border-color: #00d4ff;
+    background-color: rgba(0, 212, 255, 0.1);
+}
+
+.admin-tabs .nav-link.active {
+    color: #00ff88 !important;
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    border-color: #00ff88;
+    border-bottom-color: transparent;
+    box-shadow: 0 -2px 10px rgba(0, 255, 136, 0.2);
+}
+
+.admin-table {
+    background: white !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.admin-table thead {
+    background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%) !important;
+}
+
+.admin-table thead th {
+    color: #343a40 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none !important;
+    padding: 1rem;
+    position: relative;
+    font-size: 1.05rem;
+    text-shadow: none;
+}
+
+.admin-table thead th::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
+}
+
+.admin-table tbody tr {
+    background: white !important;
+    border-bottom: 1px solid #dee2e6 !important;
+    transition: all 0.3s ease;
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.admin-table tbody td {
+    color: #212529;
+    padding: 1rem;
+    border: none !important;
+    vertical-align: middle;
+    background: transparent !important;
+}
+
+.admin-table tbody td.text-success {
+    color: #28a745 !important;
+    font-weight: 600;
+}
+
+.admin-table tbody td.text-danger {
+    color: #dc3545 !important;
+    font-weight: 600;
+}
+
+.admin-table.table-striped tbody tr:nth-of-type(odd) {
+    background: white !important;
+}
+
+.admin-table.table-striped tbody tr:nth-of-type(even) {
+    background: rgba(0, 0, 0, 0.02) !important;
+}
+
+.admin-table.table-striped tbody tr:nth-of-type(odd) td,
+.admin-table.table-striped tbody tr:nth-of-type(even) td {
+    color: #212529;
+    background: transparent !important;
+}
+
+.status-success {
+    color: #00ff88 !important;
+    font-weight: 600;
+}
+
+.status-danger {
+    color: #ff6b35 !important;
+    font-weight: 600;
+}
+
+/* These were previously ignored — now work with the fix above */
+.admin-table .text-success {
+    color: #28a745 !important;
+    font-weight: 600;
+}
+
+.admin-table .text-danger {
+    color: #dc3545 !important;
+    font-weight: 600;
+}
+
+.admin-select-status {
+    background: white !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 8px;
+    color: #212529 !important;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.admin-select-status:focus {
+    border-color: #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+    color: #212529 !important;
+    background: white !important;
+}
+
+.admin-select-status option {
+    background: white !important;
+    color: #212529 !important;
+}
+
+.admin-spinner {
+    color: #00d4ff !important;
+}
+
+.order-id-admin {
+    font-family: "Courier New", monospace;
+    background: rgba(0, 0, 0, 0.05) !important;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    color: #007bff !important;
+    font-weight: 600;
+}
+
+.order-products-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.order-products-list li {
+    padding: 0.2rem 0;
+    color: #212529 !important;
+}
+
+.order-total-admin {
+    font-weight: 700;
+    color: #28a745;
+    font-size: 1.1rem;
+    width: 120px;
+    white-space: nowrap;
+}
+
+.status-badge-admin {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+}
+
+.status-pending-admin {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: white !important;
+}
+
+.status-dispatched-admin {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%) !important;
+    color: white !important;
+}
+
+.status-completed-admin {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+}
+
+.status-cancelled-admin {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .admin-tabs .nav-link {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.8rem;
+    }
+
+    .admin-table thead th,
+    .admin-table tbody td {
+        padding: 0.8rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .order-id-admin {
+        font-size: 0.8rem;
+    }
+
+    .order-products-list li {
+        font-size: 0.8rem;
+    }
+
+    .order-total-admin {
+        font-size: 1rem;
+    }
+
+    .status-badge-admin {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+    }
+
+    .admin-select-status {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}

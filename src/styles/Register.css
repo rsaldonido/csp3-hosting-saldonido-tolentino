@@ -1,0 +1,255 @@
+/* Register.css - Tech-themed styling for registration form */
+
+.register-container {
+    /* No specific background or min-height here as per instruction */
+    padding: 2rem 0;
+}
+
+.register-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #00d4ff 0%, #00ff88 50%, #ff6b35 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin: 2rem 0 1.5rem 0; /* Adjusted margin-bottom */
+    position: relative;
+    animation: slideInDown 0.6s ease-out;
+}
+
+.register-title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.register-form {
+    background: linear-gradient(145deg, #1f2937 0%, #111827 100%);
+    border: 1px solid #374151;
+    border-radius: 16px;
+    padding: 1.5rem; /* Reduced padding from 2.5rem */
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.4),
+        0 1px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+    animation: slideInUp 0.6s ease-out 0.2s both;
+
+    /* New styles for centering and size */
+    max-width: 500px; /* Set a maximum width for the form */
+    margin: 0 auto; /* Center the form horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center all direct children horizontally */
+}
+
+.register-form::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 212, 255, 0.1),
+        transparent
+    );
+    transition: left 0.6s;
+}
+
+.register-form:hover::before {
+    left: 100%;
+}
+
+.form-group-register { /* Changed class */
+    margin-bottom: 1.5rem; /* Reduced margin-bottom from 1.5rem */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers children horizontally */
+    width: 100%; /* Allow form group to take full width for centering */
+}
+
+.form-label-register { /* Changed class */
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #00d4ff;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    align-self: flex-start; /* Align label to the start within the flex container */
+    margin-left: 10%; /* Adjust as needed to align with input */
+    display: flex; /* Make label a flex container to align icon and text */
+    align-items: center; /* Vertically align icon and text */
+}
+
+.form-label-register::before { /* Removed content and related properties */
+    content: none; /* Explicitly remove the pseudo-element */
+}
+
+/* Styling for Font Awesome icons */
+.form-label-register .svg-inline--fa {
+    color: #00ff88; /* Apply the green color to the icon */
+    margin-right: 0.5rem; /* Space between icon and text */
+}
+
+.form-control-register { /* Changed class */
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid #374151;
+    border-radius: 12px;
+    color: #f3f4f6;
+    padding: 0.7rem 0.9rem; /* Adjusted padding */
+    font-size: 0.95rem; /* Adjusted font size */
+    transition: all 0.3s ease;
+    position: relative;
+    width: 80%; /* Reduced width */
+    max-width: 400px; /* Added max-width for larger screens */
+}
+
+.form-control-register:focus { /* Changed class */
+    background: rgba(17, 24, 39, 1);
+    border-color: #00d4ff;
+    box-shadow: 
+        0 0 0 0.2rem rgba(0, 212, 255, 0.25),
+        0 0 15px rgba(0, 212, 255, 0.3);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.form-control-register::placeholder { /* Changed class */
+    color: #9ca3af;
+    transition: color 0.3s ease;
+}
+
+.form-control-register:focus::placeholder { /* Changed class */
+    color: #d1d5db;
+}
+
+.submit-btn-tech { /* Changed class */
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    border: none;
+    border-radius: 50px;
+    padding: 1rem 3rem;
+    font-weight: 600;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 1rem; /* Reduced margin-top from 1.5rem */
+    width: 80%; /* Match input field width */
+    max-width: 400px; /* Match input field max-width */
+}
+
+.submit-btn-tech::before { /* Changed class */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.6s;
+}
+
+.submit-btn-tech:hover::before { /* Changed class */
+    left: 100%;
+}
+
+.submit-btn-tech:hover:not(:disabled) { /* Changed class */
+    background: linear-gradient(135deg, #0099cc 0%, #00d4ff 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
+    color: white;
+}
+
+.submit-btn-tech:disabled { /* Changed class */
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 4px 15px rgba(75, 85, 99, 0.3);
+}
+
+.submit-btn-tech:disabled::before { /* Changed class */
+    display: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .register-container {
+        padding: 1rem 0;
+    }
+    
+    .register-form {
+        padding: 1rem; /* Further reduced padding for mobile */
+        margin: 0 0.5rem; /* Adjusted margin for mobile */
+    }
+    
+    .register-title {
+        font-size: 2rem;
+        margin: 1.5rem 0;
+    }
+    
+    .form-group-register { /* Changed class */
+        margin-bottom: 1rem; /* Reduced margin-bottom for mobile */
+    }
+    
+    .form-control-register { /* Changed class */
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+        width: 90%; /* Adjusted width for mobile */
+    }
+
+    .form-label-register { /* Changed class */
+        margin-left: 5%; /* Adjust for mobile alignment */
+    }
+
+    .submit-btn-tech { /* Changed class */
+        padding: 0.7rem 1.5rem; /* Slightly reduced button padding for mobile */
+        font-size: 0.9rem; /* Slightly reduced button font size for mobile */
+        width: 90%; /* Match input width for mobile */
+    }
+}
+
+/* Animations */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

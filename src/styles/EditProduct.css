@@ -1,0 +1,185 @@
+/* EditProduct.css - Tech-themed styling for edit product modal */
+
+.edit-product-btn {
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 0.4rem 1rem;
+    font-weight: 600;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.edit-product-btn:hover {
+    background: linear-gradient(135deg, #0099cc 0%, #00d4ff 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+    color: white;
+}
+
+.edit-product-modal .modal-content {
+    background: linear-gradient(145deg, #1f2937 0%, #111827 100%);
+    border: 1px solid #374151;
+    border-radius: 16px;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.4),
+        0 1px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    color: #f3f4f6;
+}
+
+.edit-product-modal .modal-header {
+    border-bottom: 1px solid #374151;
+    padding: 1.5rem;
+}
+
+.edit-product-modal .modal-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.edit-product-modal .btn-close {
+    filter: invert(1) brightness(2);
+}
+
+.edit-product-modal .modal-body {
+    padding: 1.5rem;
+}
+
+.form-group-tech-modal {
+    margin-bottom: 1.5rem;
+}
+
+.form-label-tech-modal {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #00d4ff;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-control-tech-modal {
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid #374151;
+    border-radius: 8px;
+    color: #f3f4f6;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.form-control-tech-modal:focus {
+    background: rgba(17, 24, 39, 1);
+    border-color: #00d4ff;
+    box-shadow: 
+        0 0 0 0.2rem rgba(0, 212, 255, 0.25),
+        0 0 10px rgba(0, 212, 255, 0.3);
+    color: #ffffff;
+}
+
+.form-control-tech-modal::placeholder {
+    color: #9ca3af;
+}
+
+.image-preview-modal {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border: 1px solid #374151;
+    transition: all 0.3s ease;
+}
+
+.image-preview-modal:hover {
+    border-color: #00d4ff;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+.modal-footer-buttons .btn-secondary {
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    border: none;
+    color: white;
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(75, 85, 99, 0.3);
+}
+
+.modal-footer-buttons .btn-secondary:hover {
+    background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(75, 85, 99, 0.4);
+}
+
+.modal-footer-buttons .btn-primary {
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    border: none;
+    color: white;
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.modal-footer-buttons .btn-primary:hover {
+    background: linear-gradient(135deg, #0099cc 0%, #00d4ff 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+}
+
+.modal-footer-buttons .btn-primary:disabled {
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Loading state */
+.loading-spinner-modal {
+    color: #00d4ff;
+    margin-right: 0.5rem;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .edit-product-btn {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.75rem;
+    }
+    
+    .edit-product-modal .modal-title {
+        font-size: 1.5rem;
+    }
+    
+    .edit-product-modal .modal-header,
+    .edit-product-modal .modal-body,
+    .edit-product-modal .modal-footer {
+        padding: 1rem;
+    }
+    
+    .form-group-tech-modal {
+        margin-bottom: 1rem;
+    }
+    
+    .form-control-tech-modal {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .modal-footer-buttons .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+}

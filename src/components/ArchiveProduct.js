@@ -19,7 +19,7 @@ export default function ArchiveProduct({product, isActive, fetchData}) {
 
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             if(data.success === true) {
                 notyf.success("Successfully Archived")
                 fetchData();
@@ -45,7 +45,7 @@ export default function ArchiveProduct({product, isActive, fetchData}) {
 
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             if(data.success === true) {
                 notyf.success("Successfully Activated")
                 fetchData();

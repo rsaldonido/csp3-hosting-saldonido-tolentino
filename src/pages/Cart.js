@@ -23,7 +23,7 @@ export default function CartView() {
                 return res.json();
             })
             .catch(err => {
-                console.error('Fetch product error:', err);
+                // console.error('Fetch product error:', err);
                 return { name: 'Product not found' };
             });
     };
@@ -58,7 +58,7 @@ export default function CartView() {
                 });
             })
             .catch(err => {
-                console.error('Fetch cart error:', err);
+                // console.error('Fetch cart error:', err);
                 setError(err.message);
             })
             .finally(() => setIsLoading(false));
@@ -102,7 +102,7 @@ export default function CartView() {
                 });
             })
             .catch(err => {
-                console.error('Update error:', err);
+                // console.error('Update error:', err);
                 notyf.error(err.message);
             });
     };
@@ -141,7 +141,7 @@ export default function CartView() {
                 fetchCart();
             })
             .catch(err => {
-                console.error('Remove error:', err);
+                // console.error('Remove error:', err);
                 notyf.error(err.message);
             });
     };
@@ -159,7 +159,7 @@ export default function CartView() {
                 fetchCart();
             })
             .catch(err => {
-                console.error('Clear error:', err);
+                // console.error('Clear error:', err);
                 notyf.error(err.message);
             });
     };
@@ -177,7 +177,7 @@ export default function CartView() {
                 navigate('/products');
             })
             .catch(err => {
-                console.error('Checkout error:', err);
+                // console.error('Checkout error:', err);
                 notyf.error(err.message);
             });
     };

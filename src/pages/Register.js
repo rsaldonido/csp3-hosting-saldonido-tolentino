@@ -10,194 +10,276 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faUser, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default function Register() {
+  const notyf = new Notyf();
+  const { user } = useContext(UserContext);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    mobileNo: "",
+    password: "",
+    confirmPassword: ""
+  });
+  const [isActive, setIsActive] = useState(false);
+  const [isRegisterComplete, setIsRegisterComplete] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const notyf = new Notyf();
-	const {user} = useContext(UserContext);
-	const [firstName,setFirstName] = useState("");
-	const [lastName,setLastName] = useState("");
-	const [email,setEmail] = useState("");
-	const [mobileNo,setMobileNo] = useState(0);
-	const [password,setPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
-    const [isActive, setIsActive] = useState(false);
-    const [isRegisterComplete, setIsRegisterComplete] = useState(false);
+  useEffect(() => {
+    const { firstName, lastName, email, mobileNo, password, confirmPassword } = formData;
+    
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const mobileValid = /^\d{11}$/.test(mobileNo);
+    const passwordValid = password.length >= 8;
+    const passwordsMatch = password === confirmPassword;
+    
+    setIsActive(
+      firstName.trim() !== "" &&
+      lastName.trim() !== "" &&
+      email.trim() !== "" &&
+      mobileNo.trim() !== "" &&
+      password.trim() !== "" &&
+      confirmPassword.trim() !== "" &&
+      emailValid &&
+      mobileValid &&
+      passwordValid &&
+      passwordsMatch
+    );
+  }, [formData]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
-	useEffect(()=>{
+  const validateForm = () => {
+    const { firstName, lastName, email, mobileNo, password, confirmPassword } = formData;
 
-		if (
-			firstName !== "" &&
-			lastName !== "" &&
-			email !== "" &&
-			mobileNo !== "" &&
-			password !== "" &&
-			confirmPassword !== "" &&
-			password === confirmPassword &&
-			mobileNo.length === 11
-		){
+    if (!firstName.trim()) {
+      notyf.error("First name is required");
+      return false;
+    }
 
-			setIsActive(true)
+    if (!lastName.trim()) {
+      notyf.error("Last name is required");
+      return false;
+    }
 
-		} else {
+    if (!email.trim()) {
+      notyf.error("Email is required");
+      return false;
+    }
 
-			setIsActive(false)
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      notyf.error("Please enter a valid email address");
+      return false;
+    }
 
-		}
+    if (!mobileNo.trim()) {
+      notyf.error("Mobile number is required");
+      return false;
+    }
 
-	},[firstName,lastName,email,mobileNo,password,confirmPassword])
+    if (!/^\d{11}$/.test(mobileNo)) {
+      notyf.error("Mobile number must be 11 digits");
+      return false;
+    }
 
-	function registerUser(e) {
+    if (!password.trim()) {
+      notyf.error("Password is required");
+      return false;
+    }
 
-		e.preventDefault();
+    if (password.length < 8) {
+      notyf.error("Password must be at least 8 characters");
+      return false;
+    }
 
-		fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/users/register',{
+    if (password !== confirmPassword) {
+      notyf.error("Passwords do not match");
+      return false;
+    }
 
-		method: 'POST',
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
+    return true;
+  };
 
-			firstName: firstName,
-			lastName: lastName,
-			email: email,
-			mobileNo: mobileNo,
-			password: password
+  function registerUser(e) {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+    
+    setIsSubmitting(true);
 
-		} )
-		})
-		.then(res => res.json())
-		.then(data => {
+    fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/users/register', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        mobileNo: formData.mobileNo,
+        password: formData.password
+      })
+    })
+    .then(response => {
+      // Prevent default error logging
+      if (!response.ok) {
+        return response.json().then(errData => Promise.reject(errData));
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.success) {
+        notyf.success(data.message);
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          mobileNo: "",
+          password: "",
+          confirmPassword: ""
+        });
+        setIsRegisterComplete(true);
+      } else {
+        notyf.error(data.message);
+      }
+    })
+    .catch(() => {
+      notyf.error("Registration failed. Please try again.");
+    })
+    .finally(() => {
+      setIsSubmitting(false);
+    });
+  }
 
-		//data is the response of the api/server after it's been process as JS object through our res.json() method.
-		console.log(data);
-		if (data.message === "Registered Successfully") {
-		    setFirstName('');
-		    setLastName('');
-		    setEmail('');
-		    setMobileNo('');
-		    setPassword('');
-		    setConfirmPassword('');
-		    notyf.success("Registration successful");
-		    setIsRegisterComplete(true);
-		}
+  if (isRegisterComplete) {
+    return <Navigate to="/login" />;
+  }
 
-		})
-	}
+  if (user.id !== null) {
+    return <Navigate to="/" />;
+  }
 
-	if(isRegisterComplete) {
-		return <Navigate to="/login" />;
-	}
-
-    return (
-
-
-    	(user.id !== null) ?
-    		<Navigate to="/login" />
-    		:
-    		<div className="register-container">
-    		    <div className="row justify-content-center">
-    		        <div className="col-lg-6 col-md-8">
-    		            <Form onSubmit={(e) => registerUser(e)} className="register-form">
-    		                <h1 className="register-title">Register</h1>
-    		                <Form.Group className="form-group-register">
-    		                    <Form.Label className="form-label-register">
-                                    <FontAwesomeIcon icon={faUser} className="me-2" />
-                                    First Name:
-                                </Form.Label>
-    		                    <Form.Control 
-    		                        type="text" 
-    		                        placeholder="Enter First Name" 
-    		                        required 
-    		                        value={firstName}
-    		                        onChange={e => {setFirstName(e.target.value)}}
-    		                        className="form-control-register"
-    		                    />
-    		                </Form.Group>
-    		                <Form.Group className="form-group-register">
-    		                    <Form.Label className="form-label-register">
-                                    <FontAwesomeIcon icon={faUser} className="me-2" />
-                                    Last Name:
-                                </Form.Label>
-    		                    <Form.Control 
-    		                        type="text" 
-    		                        placeholder="Enter Last Name" 
-    		                        required
-    		                        value={lastName}
-    		                        onChange={e => {setLastName(e.target.value)}}
-    		                        className="form-control-register"
-    		                    />
-    		                </Form.Group>
-    		                <Form.Group className="form-group-register">
-    		                    <Form.Label className="form-label-register">
-                                    <FontAwesomeIcon icon={faEnvelope} className="me-2" />
-                                    Email:
-                                </Form.Label>
-    		                    <Form.Control 
-    		                        type="email" 
-    		                        placeholder="Enter Email" 
-    		                        required
-    		                        value={email}
-    		                        onChange={e => {setEmail(e.target.value)}}
-    		                        className="form-control-register"
-    		                    />
-    		                </Form.Group>
-    		                <Form.Group className="form-group-register"> 
-    		                    <Form.Label className="form-label-register">
-                                    <FontAwesomeIcon icon={faMobileAlt} className="me-2" />
-                                    Mobile No:
-                                </Form.Label>
-    		                    <Form.Control 
-    		                        type="number" 
-    		                        placeholder="Enter 11 Digit No." 
-    		                        required  
-    		                        value={mobileNo}
-    		                        onChange={e => {setMobileNo(e.target.value)}}
-    		                        className="form-control-register"
-    		                    />
-    		                </Form.Group>
-    		                <Form.Group className="form-group-register">
-    		                    <Form.Label className="form-label-register">
-                                    <FontAwesomeIcon icon={faLock} className="me-2" />
-                                    Password:
-                                </Form.Label>
-    		                    <Form.Control 
-    		                        type="password" 
-    		                        placeholder="Enter Password" 
-    		                        required 
-    		                        value={password}
-    		                        onChange={e => {setPassword(e.target.value)}}
-    		                        className="form-control-register"
-    		                    />
-    		                </Form.Group>
-    		                <Form.Group className="form-group-register mb-3">
-    		                    <Form.Label className="form-label-register"> 
-                                    <FontAwesomeIcon icon={faLock} className="me-2" />
-                                    Confirm Password:
-                                </Form.Label>
-    		                    <Form.Control 
-    		                        type="password" 
-    		                        placeholder="Confirm Password" 
-    		                        required 
-    		                        value={confirmPassword}
-    		                        onChange={e => {setConfirmPassword(e.target.value)}}
-    		                        className="form-control-register"
-    		                    />
-    		                </Form.Group>
-    		                {/* conditionally render submit button based on isActive state */}
-    		                { isActive ? 
-    		                    <Button variant="primary" type="submit" id="submitBtn" className="submit-btn-tech"> 
-    		                        Submit
-    		                    </Button>
-    		                    : 
-    		                    <Button variant="danger" type="submit" id="submitBtn" disabled className="submit-btn-tech"> 
-    		                        Submit
-    		                    </Button>
-    		                }
-    		            </Form>
-    		        </div>
-    		    </div>
-    		</div>
-   )
-
+  return (
+    <div className="register-container">
+      <div className="row justify-content-center">
+        <div className="col-lg-6 col-md-8">
+          <Form onSubmit={registerUser} className="register-form">
+            <h1 className="register-title">Register</h1>
+            
+            <Form.Group className="form-group-register">
+              <Form.Label className="form-label-register">
+                <FontAwesomeIcon icon={faUser} className="me-2" />
+                First Name:
+              </Form.Label>
+              <Form.Control 
+                type="text" 
+                name="firstName"
+                placeholder="Enter First Name" 
+                required 
+                value={formData.firstName}
+                onChange={handleChange}
+                className="form-control-register"
+              />
+            </Form.Group>
+            
+            <Form.Group className="form-group-register">
+              <Form.Label className="form-label-register">
+                <FontAwesomeIcon icon={faUser} className="me-2" />
+                Last Name:
+              </Form.Label>
+              <Form.Control 
+                type="text" 
+                name="lastName"
+                placeholder="Enter Last Name" 
+                required
+                value={formData.lastName}
+                onChange={handleChange}
+                className="form-control-register"
+              />
+            </Form.Group>
+            
+            <Form.Group className="form-group-register">
+              <Form.Label className="form-label-register">
+                <FontAwesomeIcon icon={faEnvelope} className="me-2" />
+                Email:
+              </Form.Label>
+              <Form.Control 
+                type="email" 
+                name="email"
+                placeholder="Enter Email" 
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="form-control-register"
+              />
+            </Form.Group>
+            
+            <Form.Group className="form-group-register"> 
+              <Form.Label className="form-label-register">
+                <FontAwesomeIcon icon={faMobileAlt} className="me-2" />
+                Mobile No:
+              </Form.Label>
+              <Form.Control 
+                type="tel" 
+                name="mobileNo"
+                placeholder="Enter 11 Digit No." 
+                required  
+                value={formData.mobileNo}
+                onChange={handleChange}
+                className="form-control-register"
+                maxLength="11"
+              />
+            </Form.Group>
+            
+            <Form.Group className="form-group-register">
+              <Form.Label className="form-label-register">
+                <FontAwesomeIcon icon={faLock} className="me-2" />
+                Password:
+              </Form.Label>
+              <Form.Control 
+                type="password" 
+                name="password"
+                placeholder="Enter Password (min 8 chars)" 
+                required 
+                value={formData.password}
+                onChange={handleChange}
+                className="form-control-register"
+              />
+            </Form.Group>
+            
+            <Form.Group className="form-group-register mb-3">
+              <Form.Label className="form-label-register"> 
+                <FontAwesomeIcon icon={faLock} className="me-2" />
+                Confirm Password:
+              </Form.Label>
+              <Form.Control 
+                type="password" 
+                name="confirmPassword"
+                placeholder="Confirm Password" 
+                required 
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="form-control-register"
+              />
+            </Form.Group>
+            
+            <Button 
+              variant="primary" 
+              type="submit" 
+              id="submitBtn" 
+              className="submit-btn-tech"
+              disabled={!isActive || isSubmitting}
+            > 
+              {isSubmitting ? 'Registering...' : 'Register'}
+            </Button>
+          </Form>
+        </div>
+      </div>
+    </div>
+  );
 }

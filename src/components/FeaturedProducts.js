@@ -38,7 +38,7 @@ export default function FeaturedProducts() {
                 }
             })
             .catch(error => {
-                console.error("Error fetching products:", error);
+                // console.error("Error fetching products:", error);
                 if (isMounted) setIsReady(true); // Still show something even if error
             });
 

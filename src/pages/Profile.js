@@ -32,7 +32,7 @@ export default function Profile() {
 	        }
 	    })
 	    .catch((err) => {
-	        console.error(err);
+	        // console.error(err);
 	        notyf.error("Network Error");
 	    })
 	    .finally(() => {

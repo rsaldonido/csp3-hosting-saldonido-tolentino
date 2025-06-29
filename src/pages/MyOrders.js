@@ -26,7 +26,7 @@ export default function MyOrders() {
                 return { productId, product };
             })
             .catch(err => {
-                console.error('Fetch product error:', err);
+                // console.error('Fetch product error:', err);
                 return { productId, product: { name: 'Product not found' } };
             });
     };
@@ -74,7 +74,7 @@ export default function MyOrders() {
             setProducts(productsMap);
         })
         .catch(err => {
-            console.error("Fetch orders error:", err);
+            // console.error("Fetch orders error:", err);
             setError(err.message);
         })
         .finally(() => {

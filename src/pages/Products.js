@@ -41,7 +41,7 @@ export default function Products() {
             setIsLoading(false);
         })
         .catch(err => {
-            console.error("Fetch error:", err);
+            // console.error("Fetch error:", err);
             setError(err.message);
             setIsLoading(false);
         });

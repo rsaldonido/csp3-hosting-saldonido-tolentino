@@ -51,7 +51,7 @@ export default function ProductView() {
       }
     })
     .catch(err => {
-      console.error("Add to cart error:", err);
+      // console.error("Add to cart error:", err);
       notyf.error(err.message || "Failed to add item to cart");
     })
     .finally(() => {
@@ -75,7 +75,7 @@ export default function ProductView() {
       }
     })
     .catch(err => {
-      console.error("Fetch product error:", err);
+      // console.error("Fetch product error:", err);
       setError(err.message);
     })
     .finally(() => {

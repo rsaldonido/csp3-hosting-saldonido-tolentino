@@ -1,4 +1,3 @@
-// App.js
 import { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -63,12 +62,12 @@ function App() {
           });
         }
         else {
-          console.error("Unexpected response:", data);
+          // console.error("Unexpected response:", data);
           setUser({ id: null, isAdmin: null });
         }
       })
       .catch(err => {
-        console.error("Request failed:", err);
+        // console.error("Request failed:", err);
         setUser({ id: null, isAdmin: null });
       })
       .finally(() => {

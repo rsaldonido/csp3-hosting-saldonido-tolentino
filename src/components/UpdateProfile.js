@@ -41,7 +41,7 @@ export default function UpdateProfile({ userDetails, fetchUserDetails }) {
         })
         .catch(err => {
             notyf.error("An error occurred while updating profile");
-            console.error(err);
+            // console.error(err);
         });
     };
 

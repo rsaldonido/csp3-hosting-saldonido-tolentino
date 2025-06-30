@@ -174,7 +174,7 @@ export default function ProductView() {
                 <Card.Text className="product-text mb-4">{product.description}</Card.Text>
                 
                 <Card.Subtitle className="product-subtitle">Price:</Card.Subtitle>
-                <Card.Text className="product-price mb-4">&#8369; {product.price.toFixed(2)}</Card.Text>
+                <Card.Text className="product-price mb-4">&#8369; {product.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</Card.Text>
                 
                 <Card.Subtitle className="product-subtitle">Status:</Card.Subtitle>
                 <Card.Text className="product-text mb-4">

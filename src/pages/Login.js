@@ -32,7 +32,7 @@ export default function Login() {
 
             } )
         })
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
 
             if(data.access !== undefined){

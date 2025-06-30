@@ -50,15 +50,14 @@ export default function MyOrders() {
             const orders = data.orders || [];
             setOrders(orders);
 
-            // Create an array of all product IDs from all orders
+
             const allProductIds = orders.flatMap(order => 
                 order.productsOrdered.map(item => item.productId)
             );
 
-            // Remove duplicates
             const uniqueProductIds = [...new Set(allProductIds)];
 
-            // Fetch details for all unique products
+
             const productFetches = uniqueProductIds.map(productId => 
                 fetchProductDetails(productId)
             );
@@ -66,7 +65,7 @@ export default function MyOrders() {
             return Promise.all(productFetches);
         })
         .then(productResults => {
-            // Create a products object with productId as key
+
             const productsMap = {};
             productResults.forEach(({ productId, product }) => {
                 productsMap[productId] = product;
@@ -211,7 +210,7 @@ export default function MyOrders() {
                                     ))}
                                 </ul>
                             </td>
-                            <td className="order-total-price">&#8369; {order.totalPrice.toFixed(2)}</td>
+                            <td className="order-total-price">&#8369; {order.totalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                             <td className="text-center">
                                 <Badge className={
                                     order.status === 'Pending' ? 'status-badge-myorders status-pending-myorders' :

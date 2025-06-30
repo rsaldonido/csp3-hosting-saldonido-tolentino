@@ -46,8 +46,8 @@ export default function Register() {
     );
   }, [formData]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (handleChangeEvent) => {
+    const { name, value } = handleChangeEvent.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -105,8 +105,8 @@ export default function Register() {
     return true;
   };
 
-  function registerUser(e) {
-    e.preventDefault();
+  function registerUser(registerUserParamter) {
+    registerUserParamter.preventDefault();
     
     if (!validateForm()) return;
     

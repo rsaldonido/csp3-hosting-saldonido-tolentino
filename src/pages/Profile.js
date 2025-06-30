@@ -21,7 +21,7 @@ export default function Profile() {
 	            Authorization: `Bearer ${localStorage.getItem('token')}`
 	        }
 	    })
-	    .then(res => res.json())
+	    .then(response => response.json())
 	    .then(data => {
 	        if (data && !data.error) {
 	            setDetails(data);
@@ -43,6 +43,7 @@ export default function Profile() {
 
 	useEffect(() => {
 		fetchUserDetails();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	if (user.id === null) {

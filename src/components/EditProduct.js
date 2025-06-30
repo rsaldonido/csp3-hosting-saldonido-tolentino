@@ -16,8 +16,8 @@ export default function EditProduct({ product, fetchData }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  function handleImageChange(e) {
-    const file = e.target.files[0];
+  function handleImageChange(handleImageChangeparameter) {
+    const file = handleImageChangeparameter.target.files[0];
     if (file) {
       const maxSize = 50 * 1024; // 50KB
       const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -40,8 +40,8 @@ export default function EditProduct({ product, fetchData }) {
     }
   }
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
+  const handleUpdate = (handleUpdateParamter) => {
+    handleUpdateParamter.preventDefault();
     setIsLoading(true);
 
     fetch(`https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/products/${product._id}/update`, {
@@ -57,7 +57,7 @@ export default function EditProduct({ product, fetchData }) {
         image: image
       })
     })
-    .then(res => res.json())
+    .then(response => response.json())
     .then(data => {
       if (data.success) {
         notyf.success("Product updated successfully");
@@ -98,7 +98,7 @@ export default function EditProduct({ product, fetchData }) {
               <Form.Control
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(changeEvent) => setName(changeEvent.target.value)}
                 required
                 className="form-control-tech-modal"
               />
@@ -109,7 +109,7 @@ export default function EditProduct({ product, fetchData }) {
                 as="textarea"
                 rows={3}
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(changeEvent) => setDescription(changeEvent.target.value)}
                 required
                 className="form-control-tech-modal"
               />
@@ -120,13 +120,14 @@ export default function EditProduct({ product, fetchData }) {
                 type="number"
                 step="0.01"
                 value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(changeEvent) => setPrice(changeEvent.target.value)}
                 required
                 className="form-control-tech-modal"
               />
             </Form.Group>
             <Form.Group className="form-group-tech-modal mb-3">
               <Form.Label className="form-label-tech-modal">Product Image</Form.Label>
+              <Form.Label className="form-label-tech-modal">Only Accepts .JPG, .JPEG, .PNG with less than 50KB</Form.Label>
               <Form.Control
                 type="file"
                 accept="image/*"

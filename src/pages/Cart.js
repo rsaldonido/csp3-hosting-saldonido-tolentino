@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useCallback } from 'react';
 import { Container, Table, Button, Form, Alert, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
@@ -22,13 +22,10 @@ export default function CartView() {
                 if (!res.ok) throw new Error('Failed to fetch product');
                 return res.json();
             })
-            .catch(err => {
-                // console.error('Fetch product error:', err);
-                return { name: 'Product not found' };
-            });
+            .catch(() => ({ name: 'Product not found' }));
     };
 
-    const fetchCart = () => {
+    const fetchCart = useCallback(() => {
         setIsLoading(true);
         fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/cart/get-cart', {
             headers: {
@@ -57,12 +54,9 @@ export default function CartView() {
                     setProducts(productDetails);
                 });
             })
-            .catch(err => {
-                // console.error('Fetch cart error:', err);
-                setError(err.message);
-            })
+            .catch(err => setError(err.message))
             .finally(() => setIsLoading(false));
-    };
+    }, []);
 
     useEffect(() => {
         if (user.isAdmin) {
@@ -75,7 +69,7 @@ export default function CartView() {
         } else {
             setIsLoading(false);
         }
-    }, [user.id, user.isAdmin, navigate]);
+    }, [user.id, user.isAdmin, navigate, fetchCart]);
 
     const updateQuantity = (productId, newQuantity) => {
         if (!newQuantity || newQuantity < 1 || isNaN(newQuantity)) {
@@ -101,10 +95,7 @@ export default function CartView() {
                     return updated;
                 });
             })
-            .catch(err => {
-                // console.error('Update error:', err);
-                notyf.error(err.message);
-            });
+            .catch(err => notyf.error(err.message));
     };
 
     const handleQuantityInputChange = (productId, value) => {
@@ -140,10 +131,7 @@ export default function CartView() {
                 notyf.success('Item removed from cart');
                 fetchCart();
             })
-            .catch(err => {
-                // console.error('Remove error:', err);
-                notyf.error(err.message);
-            });
+            .catch(err => notyf.error(err.message));
     };
 
     const clearCart = () => {
@@ -158,10 +146,7 @@ export default function CartView() {
                 notyf.success('Cart cleared');
                 fetchCart();
             })
-            .catch(err => {
-                // console.error('Clear error:', err);
-                notyf.error(err.message);
-            });
+            .catch(err => notyf.error(err.message));
     };
 
     const checkout = () => {
@@ -176,17 +161,16 @@ export default function CartView() {
                 notyf.success('Order placed successfully');
                 navigate('/products');
             })
-            .catch(err => {
-                // console.error('Checkout error:', err);
-                notyf.error(err.message);
-            });
+            .catch(err => notyf.error(err.message));
     };
 
     const renderCartItems = () => {
         return cart.cartItems.map(item => (
             <tr key={item.productId}>
                 <td className="text-start">{products[item.productId]?.name || 'Loading...'}</td>
-                <td className="text-center">&#8369; {(item.subtotal / item.quantity).toFixed(2)}</td>
+                <td className="text-center">
+                    &#8369; {(item.subtotal / item.quantity).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </td>
                 <td className="text-center">
                     <div className="quantity-controls-cart">
                         <Button
@@ -221,9 +205,11 @@ export default function CartView() {
                         </Button>
                     </div>
                 </td>
-                <td className="text-center">&#8369; {item.subtotal.toFixed(2)}</td>
-                <td className = "text-center">
-                    <Button 
+                <td className="text-center">
+                    &#8369; {item.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </td>
+                <td className="text-center">
+                    <Button
                         variant="danger"
                         size="sm"
                         onClick={() => removeItem(item.productId)}
@@ -285,7 +271,7 @@ export default function CartView() {
             <h2 className="card-title mb-4">Your Cart</h2>
             <Table striped bordered hover responsive className="cart-table">
                 <thead>
-                    <tr  className="align-middle">
+                    <tr className="align-middle">
                         <th className="text-start">Product</th>
                         <th className="text-center">Price</th>
                         <th className="text-center">Quantity</th>
@@ -293,11 +279,13 @@ export default function CartView() {
                         <th className="text-center">Actions</th>
                     </tr>
                 </thead>
-                <tbody  className="align-middle">{renderCartItems()}</tbody>
+                <tbody className="align-middle">{renderCartItems()}</tbody>
                 <tfoot>
                     <tr>
                         <td colSpan="3" className="text-end fw-bold">Total:</td>
-                        <td className="fw-bold total-price text-end">&#8369; {cart.totalPrice.toFixed(2)}</td>
+                        <td className="fw-bold total-price text-end">
+                            &#8369; {cart.totalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </td>
                         <td></td>
                     </tr>
                 </tfoot>

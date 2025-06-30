@@ -17,7 +17,7 @@ export default function ArchiveProduct({product, isActive, fetchData}) {
             }
         })
 
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
             // console.log(data)
             if(data.success === true) {
@@ -43,7 +43,7 @@ export default function ArchiveProduct({product, isActive, fetchData}) {
             }
         })
 
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
             // console.log(data)
             if(data.success === true) {

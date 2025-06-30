@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import '../styles/ResetPassword.css';
-
-// Import Font Awesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock } from '@fortawesome/free-solid-svg-icons'; // Import specific icons
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+
 
 const ResetPassword = () => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -12,41 +11,39 @@ const ResetPassword = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleResetPassword = async (e) => {
-    e.preventDefault();
+  const handleResetPassword = (submitEvent) => {
+    submitEvent.preventDefault();
     setLoading(true);
     setMessage('');
     setError('');
 
-    try {
-      const token = localStorage.getItem('token'); // assuming JWT is stored in localStorage
+    const token = localStorage.getItem('token');
 
-      const response = await fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/users/update-password', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          currentPassword,
-          newPassword
-        } )
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
+    fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/users/update-password', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        currentPassword,
+        newPassword
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data && data.message && data.message.toLowerCase().includes('success')) {
         setMessage('Password has been successfully changed.');
         setCurrentPassword('');
         setNewPassword('');
+      } else if (data && data.message) {
+        setError(data.message);
       } else {
-        setError(data.message || 'Failed to reset password.');
+        setError('Failed to reset password.');
       }
-    } catch (err) {
-      setError('An unexpected error occurred.');
-    }
+      setLoading(false);
+    });
 
-    setLoading(false);
   };
 
   return (
@@ -66,14 +63,14 @@ const ResetPassword = () => {
                 className="form-control-tech-reset"
                 id="currentPassword"
                 value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
+                onChange={(changeEvent) => setCurrentPassword(changeEvent.target.value)}
                 required
               />
             </div>
 
             <div className="form-group-tech-reset mb-3">
               <label htmlFor="newPassword" className="form-label-tech-reset">
-                <FontAwesomeIcon icon={faLock} className="me-2" /> 
+                <FontAwesomeIcon icon={faLock} className="me-2" />
                 New Password
               </label>
               <input
@@ -81,7 +78,7 @@ const ResetPassword = () => {
                 className="form-control-tech-reset"
                 id="newPassword"
                 value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                onChange={(changeEvent) => setNewPassword(changeEvent.target.value)}
                 required
               />
             </div>

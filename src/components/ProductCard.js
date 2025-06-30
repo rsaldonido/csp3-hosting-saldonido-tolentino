@@ -25,7 +25,7 @@ export default function ProductCard({productProp}) {
         {/*<Card.Subtitle className="product-card-subtitle">Description:</Card.Subtitle>*/}
         {/*<Card.Text className="product-card-text">{description}</Card.Text>*/}
         <Card.Subtitle className="product-card-subtitle">Price:</Card.Subtitle>
-        <Card.Text className="product-card-price">&#8369; {price}</Card.Text>
+        <Card.Text className="product-card-price">&#8369; {price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</Card.Text>
         <Link 
           className="product-details-btn mt-auto" 
           to={`/products/${_id}`}

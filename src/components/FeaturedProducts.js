@@ -11,7 +11,7 @@ export default function FeaturedProducts() {
         let isMounted = true; 
 
         fetch("https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/products/active")
-            .then(res => res.json())
+            .then(response => response.json())
             .then(data => {
                 if (!isMounted) return;
 
@@ -39,7 +39,7 @@ export default function FeaturedProducts() {
             })
             .catch(error => {
                 // console.error("Error fetching products:", error);
-                if (isMounted) setIsReady(true); // Still show something even if error
+                if (isMounted) setIsReady(true);
             });
 
         return () => {
@@ -54,18 +54,17 @@ export default function FeaturedProducts() {
 
     return (
         <Container fluid className="featured-products-container">
-            {/* Title with animation class that will trigger immediately since we're ready */}
+
             <h2 className="text-center mb-4 featured-product-title animate">
                 Featured Products
             </h2>
             
-            {/* Products grid - only renders when ready */}
             <Row className="g-3 justify-content-center">
                 {previews.map((product) => (
                     <Col 
                         key={product._id} 
                         xs={12} sm={6} md={4} lg={true} 
-                        style={{ maxWidth: '300px' }}
+                        // style={{ maxWidth: '300px' }}
                     >
                         <PreviewProducts data={product} />
                     </Col>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Navigate, useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
@@ -16,10 +16,10 @@ export default function AddProduct() {
   const [image, setImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  function handleImageChange(e) {
-    const file = e.target.files[0];
+  function handleImageChange(ImageChangeParameter) {
+    const file = ImageChangeParameter.target.files[0];
     if (file) {
-      const maxSize = 50 * 1024; // 50KB
+      const maxSize = 50 * 1024;
       const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 
       if (!validTypes.includes(file.type)) {
@@ -60,7 +60,7 @@ export default function AddProduct() {
         image: image
       })
     })
-    .then(res => res.json())
+    .then(response => response.json())
     .then(data => {
       if (data._id) {
         notyf.success("Product Added Successfully");
@@ -96,7 +96,7 @@ export default function AddProduct() {
                   placeholder="Enter Name"
                   required
                   value={name}
-                  onChange={e => setName(e.target.value)}
+                  onChange={changeEvent => setName(changeEvent.target.value)}
                   className="form-control-tech"
                 />
               </Form.Group>
@@ -109,7 +109,7 @@ export default function AddProduct() {
                   placeholder="Enter Description"
                   required
                   value={description}
-                  onChange={e => setDescription(e.target.value)}
+                  onChange={changeEvent => setDescription(changeEvent.target.value)}
                   className="form-control-tech textarea-tech"
                 />
               </Form.Group>
@@ -122,7 +122,7 @@ export default function AddProduct() {
                   placeholder="Enter Price"
                   required
                   value={price}
-                  onChange={e => setPrice(e.target.value)}
+                  onChange={changeEvent => setPrice(changeEvent.target.value)}
                   className="form-control-tech"
                 />
               </Form.Group>

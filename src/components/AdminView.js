@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Card, Button, Row, Col, Tabs, Tab, Spinner } from 'react-bootstrap';
+import { Table, Tabs, Tab, Spinner } from 'react-bootstrap';
 import EditProduct from './EditProduct';
 import ArchiveProduct from './ArchiveProduct';
 import PropTypes from 'prop-types';
@@ -22,13 +22,10 @@ const AdminOrders = () => {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
             const allOrders = data.orders || [];
             setOrders(allOrders);
-
-            const userIds = [...new Set(allOrders.map(order => order.userId))];
-            const productIds = [...new Set(allOrders.flatMap(order => order.productsOrdered.map(p => p.productId)))];
 
             Promise.all([
                 fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/users/all', {
@@ -64,7 +61,7 @@ const AdminOrders = () => {
             },
             body: JSON.stringify({ status: newStatus })
         })
-        .then(res => res.json())
+        .then(response => response.json())
         .then(() => {
             notyf.success('Status updated successfully');
             fetchOrders();
@@ -114,7 +111,7 @@ const AdminOrders = () => {
                                     ))}
                                 </ul>
                             </td>
-                            <td className="order-total-admin text-center">&#8369; {order.totalPrice.toFixed(2)}</td>
+                            <td className="order-total-admin text-center">&#8369; {order.totalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                             <td className="text-center">
                                 <span className={`status-badge-admin ${
                                     order.status === 'Pending' ? 'status-pending-admin' :
@@ -158,7 +155,7 @@ export default function AdminView({ productsData, fetchData }) {
         <>
             <Tabs
                 activeKey={activeTab}
-                onSelect={(k) => setActiveTab(k)}
+                onSelect={(tabParameter) => setActiveTab(tabParameter)}
                 id="admin-tabs"
                 className="admin-tabs mb-4"
             >
@@ -178,7 +175,7 @@ export default function AdminView({ productsData, fetchData }) {
                                 <tr key={product._id}>
                                     <td>{product.name}</td>
                                     <td>{product.description}</td>
-                                    <td className="order-total-admin">&#8369; {product.price.toFixed(2)}</td>
+                                    <td className="order-total-admin">&#8369; {product.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                     <td className={product.isActive ? "text-success" : "text-danger"}>
                                         {product.isActive ? "Available" : "Unavailable"}
                                     </td>

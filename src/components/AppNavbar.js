@@ -1,4 +1,3 @@
-// AppNavbar.js (Fully Fixed and Working)
 import { useState, useContext, useRef, useEffect } from 'react';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -23,13 +22,10 @@ export default function AppNavbar() {
   
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      const clickedOutsideMobileAccount =
-        mobileAccountRef.current && !mobileAccountRef.current.contains(e.target);
-      const clickedOutsideDesktopAccount =
-        desktopAccountRef.current && !desktopAccountRef.current.contains(e.target);
-      const clickedOutsideHamburger =
-        hamburgerRef.current && !hamburgerRef.current.contains(e.target);
+    const handleClickOutside = (handleClickOutsideParameter) => {
+      const clickedOutsideMobileAccount = mobileAccountRef.current && !mobileAccountRef.current.contains(handleClickOutsideParameter.target);
+      const clickedOutsideDesktopAccount = desktopAccountRef.current && !desktopAccountRef.current.contains(handleClickOutsideParameter.target);
+      const clickedOutsideHamburger = hamburgerRef.current && !hamburgerRef.current.contains(handleClickOutsideParameter.target);
 
       if (clickedOutsideMobileAccount && clickedOutsideDesktopAccount && clickedOutsideHamburger) {
         setAccountOpen(false);

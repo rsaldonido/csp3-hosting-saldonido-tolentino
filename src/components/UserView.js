@@ -40,7 +40,7 @@ export default function UserView({ productsData = [] }) {
                         type="text"
                         placeholder="Search products..."
                         value={searchTerm}
-                        onChange={e => setSearchTerm(e.target.value)}
+                        onChange={changeEvent => setSearchTerm(changeEvent.target.value)}
                         className="form-control-tech-search"
                     />
                 </Form.Group>
@@ -51,7 +51,7 @@ export default function UserView({ productsData = [] }) {
                             type="number"
                             placeholder="Min"
                             value={minPrice}
-                            onChange={e => setMinPrice(e.target.value)}
+                            onChange={changeEvent => setMinPrice(changeEvent.target.value)}
                             className="form-control-tech-search"
                         />
                     </Form.Group>
@@ -61,7 +61,7 @@ export default function UserView({ productsData = [] }) {
                             type="number"
                             placeholder="Max"
                             value={maxPrice}
-                            onChange={e => setMaxPrice(e.target.value)}
+                            onChange={changeEvent => setMaxPrice(changeEvent.target.value)}
                             className="form-control-tech-search"
                         />
                     </Form.Group>

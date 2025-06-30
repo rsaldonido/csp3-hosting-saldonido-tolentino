@@ -12,15 +12,15 @@ export default function UpdateProfile({ userDetails, fetchUserDetails }) {
         mobileNo: userDetails.mobileNo || ''
     });
 
-    const handleChange = (e) => {
+    const handleChange = (changeEvent) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [changeEvent.target.name]: changeEvent.target.value
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (submitEvent) => {
+        submitEvent.preventDefault();
         
         fetch('https://kchtg2e005.execute-api.us-west-2.amazonaws.com/production/users/update-profile', {
             method: 'PUT',

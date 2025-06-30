@@ -17,7 +17,7 @@ export default function PreviewProducts(props){
 						<Link to={`/products/${_id}`}>{ name }</Link> 
 					</Card.Title>
 					<Card.Text>
-                        {image ? ( // Conditional rendering based on 'image' existence
+                        {image ? (
                             <img 
                                 src={image} 
                                 alt="Preview" 
@@ -33,7 +33,7 @@ export default function PreviewProducts(props){
 					
 				</Card.Body>
 				<Card.Footer>
-					<h5 className="text-center price-tag">₱{ price }</h5>
+					<h5 className="text-center price-tag">₱{price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h5>
 					<Link className="btn btn-primary btn-details d-block" to={`/products/${	_id}`}>Details</Link>
 				</Card.Footer>
 			</Card>
